@@ -11,6 +11,71 @@
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Ayarlar" />
 
             <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TitleAlignment" />
+                        <RadioButton
+                            Margin="0,8,0,0"
+                            Checked="OnTitleAlignmentChecked"
+                            Content="Sol"
+                            GroupName="TitleAlign"
+                            IsChecked="True"
+                            Tag="Left" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Checked="OnTitleAlignmentChecked"
+                            Content="Orta"
+                            GroupName="TitleAlign"
+                            Tag="Center" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Checked="OnTitleAlignmentChecked"
+                            Content="Sağ"
+                            GroupName="TitleAlign"
+                            Tag="Right" />
+                        <TextBlock
+                            Margin="0,8,0,0"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Orta seçildiğinde başlık, ikon ve düğmelerden bağımsız olarak pencereye göre ortalanır."
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Davranış" />
+                        <CheckBox
+                            Margin="0,8,0,0"
+                            Checked="OnShowIconChanged"
+                            Content="ShowIcon"
+                            IsChecked="True"
+                            Unchecked="OnShowIconChanged" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Checked="OnCanMaximizeChanged"
+                            Content="CanMaximize"
+                            IsChecked="True"
+                            Unchecked="OnCanMaximizeChanged" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Checked="OnBoldTitleChanged"
+                            Content="Kalın başlık"
+                            Unchecked="OnBoldTitleChanged" />
+                        <TextBlock
+                            Margin="0,8,0,0"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Büyült düğmesinin üzerinde bekleyince Snap Layouts açılır; çubuğa sağ tıklayınca sistem menüsü gelir."
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Hakkında" />
                     <TextBlock

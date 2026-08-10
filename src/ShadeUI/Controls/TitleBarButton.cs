@@ -34,6 +34,18 @@ public class TitleBarButton : Button
         typeof(TitleBarButton),
         new PropertyMetadata(string.Empty));
 
+    public static readonly DependencyProperty IsSimulatedHoverProperty = DependencyProperty.Register(
+        nameof(IsSimulatedHover),
+        typeof(bool),
+        typeof(TitleBarButton),
+        new PropertyMetadata(false));
+
+    public static readonly DependencyProperty IsSimulatedPressProperty = DependencyProperty.Register(
+        nameof(IsSimulatedPress),
+        typeof(bool),
+        typeof(TitleBarButton),
+        new PropertyMetadata(false));
+
     public TitleBarButtonType ButtonType
     {
         get => (TitleBarButtonType)GetValue(ButtonTypeProperty);
@@ -45,5 +57,22 @@ public class TitleBarButton : Button
     {
         get => (string)GetValue(GlyphProperty);
         set => SetValue(GlyphProperty, value);
+    }
+
+    /// <summary>
+    /// Draws the hover state even though WPF sees no mouse. Needed while Windows owns the
+    /// pointer for Snap Layouts, where the button is reported as a non-client area.
+    /// </summary>
+    public bool IsSimulatedHover
+    {
+        get => (bool)GetValue(IsSimulatedHoverProperty);
+        set => SetValue(IsSimulatedHoverProperty, value);
+    }
+
+    /// <summary>Draws the pressed state during a non-client (Snap Layouts) click.</summary>
+    public bool IsSimulatedPress
+    {
+        get => (bool)GetValue(IsSimulatedPressProperty);
+        set => SetValue(IsSimulatedPressProperty, value);
     }
 }

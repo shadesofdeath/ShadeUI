@@ -33,6 +33,16 @@
                             <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
                             <Setter TargetName="GlyphText" Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
                         </Trigger>
+
+                        <!--  Windows owns the pointer during Snap Layouts, so hover/press are driven by TitleBar  -->
+                        <Trigger Property="IsSimulatedHover" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSimulatedPress" Value="True">
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+                            <Setter TargetName="GlyphText" Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+                        </Trigger>
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="ButtonType" Value="Close" />
@@ -49,6 +59,11 @@
                             <Setter TargetName="Root" Property="Background" Value="#E6C42B1C" />
                             <Setter TargetName="GlyphText" Property="Foreground" Value="#B3FFFFFF" />
                         </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Root" Property="Background" Value="Transparent" />
+                            <Setter TargetName="GlyphText" Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -72,16 +87,32 @@
     <Style TargetType="{x:Type controls:TitleBar}">
         <Setter Property="Height" Value="{DynamicResource TitleBarHeight}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="TitleFontSize" Value="{DynamicResource ControlFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:TitleBar}">
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
+
+                        <!--  Title first so the caption buttons stay on top when it is centred  -->
+                        <TextBlock
+                            x:Name="TitleText"
+                            Grid.Column="2"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="{TemplateBinding TitleFontSize}"
+                            FontWeight="{TemplateBinding TitleFontWeight}"
+                            Foreground="{TemplateBinding TitleForeground}"
+                            IsHitTestVisible="False"
+                            Text="{TemplateBinding Title}"
+                            TextTrimming="CharacterEllipsis" />
 
                         <Image
                             x:Name="IconImage"
@@ -91,38 +122,82 @@
                             Margin="12,0,0,0"
                             VerticalAlignment="Center"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="{TemplateBinding Icon}" />
+                            Source="{TemplateBinding Icon}"
+                            Visibility="Collapsed" />
 
                         <TextBlock
-                            x:Name="TitleText"
+                            x:Name="IconGlyphText"
+                            Grid.Column="0"
+                            Margin="12,0,0,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{DynamicResource ShadeIconFontFamily}"
+                            FontSize="{DynamicResource NavigationIconSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            Text="{TemplateBinding IconGlyph}"
+                            Visibility="Collapsed" />
+
+                        <ContentPresenter
+                            x:Name="LeadingHost"
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
-                            FontSize="{DynamicResource ControlFontSize}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Text="{TemplateBinding Title}"
-                            TextTrimming="CharacterEllipsis" />
+                            Content="{TemplateBinding LeadingContent}"
+                            WindowChrome.IsHitTestVisibleInChrome="True" />
 
                         <ContentPresenter
-                            Grid.Column="2"
+                            Grid.Column="3"
                             VerticalAlignment="Center"
                             Content="{TemplateBinding TrailingContent}"
                             WindowChrome.IsHitTestVisibleInChrome="True" />
 
                         <StackPanel
-                            Grid.Column="3"
+                            Grid.Column="4"
                             VerticalAlignment="Stretch"
                             Orientation="Horizontal">
                             <controls:TitleBarButton x:Name="PART_MinimizeButton" ButtonType="Minimize" />
-                            <controls:TitleBarButton x:Name="PART_MaximizeButton" ButtonType="Maximize" />
+                            <controls:TitleBarButton
+                                x:Name="PART_MaximizeButton"
+                                ButtonType="Maximize"
+                                IsEnabled="{TemplateBinding CanMaximize}" />
                             <controls:TitleBarButton x:Name="PART_CloseButton" ButtonType="Close" />
                         </StackPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Icon" Value="{x:Null}">
-                            <Setter TargetName="IconImage" Property="Visibility" Value="Collapsed" />
+
+                        <!--  Icon  -->
+                        <Trigger Property="IconMode" Value="Image">
+                            <Setter TargetName="IconImage" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IconMode" Value="Glyph">
+                            <Setter TargetName="IconGlyphText" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IconMode" Value="None">
                             <Setter TargetName="TitleText" Property="Margin" Value="12,0,0,0" />
                         </Trigger>
+
+                        <!--  Leading slot only takes space when it has content  -->
+                        <Trigger Property="LeadingContent" Value="{x:Null}">
+                            <Setter TargetName="LeadingHost" Property="Margin" Value="0" />
+                        </Trigger>
+
+                        <!--  Title alignment  -->
+                        <Trigger Property="TitleAlignment" Value="Center">
+                            <Setter TargetName="TitleText" Property="Grid.Column" Value="0" />
+                            <Setter TargetName="TitleText" Property="Grid.ColumnSpan" Value="5" />
+                            <Setter TargetName="TitleText" Property="Margin" Value="0" />
+                            <Setter TargetName="TitleText" Property="HorizontalAlignment" Value="Center" />
+                        </Trigger>
+                        <Trigger Property="TitleAlignment" Value="Right">
+                            <Setter TargetName="TitleText" Property="Margin" Value="10,0,10,0" />
+                            <Setter TargetName="TitleText" Property="HorizontalAlignment" Value="Right" />
+                        </Trigger>
+
+                        <!--  Title colour override  -->
+                        <Trigger Property="TitleForeground" Value="{x:Null}">
+                            <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                        </Trigger>
+
+                        <!--  Caption buttons  -->
                         <Trigger Property="ShowMinimize" Value="False">
                             <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Collapsed" />
                         </Trigger>
