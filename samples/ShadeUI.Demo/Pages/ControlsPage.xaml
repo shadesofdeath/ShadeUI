@@ -1,0 +1,39 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ControlsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="36,28,36,36" MaxWidth="1000" HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Kontroller" />
+            <TextBlock
+                Margin="0,8,0,0"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Şimdilik Button stilleri hazır. CheckBox, RadioButton, TextBox, ComboBox, ToggleSwitch ve daha fazlası sonraki adımlarda buraya eklenecek." />
+
+            <Border Margin="0,24,0,0" Style="{StaticResource ShadeCardStyle}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Button" />
+                    <StackPanel Margin="0,12,0,0" Orientation="Horizontal">
+                        <Button Content="Varsayılan" />
+                        <Button
+                            Margin="12,0,0,0"
+                            Content="Vurgulu"
+                            Style="{StaticResource AccentButtonStyle}" />
+                        <Button
+                            Margin="12,0,0,0"
+                            Content="Devre Dışı"
+                            IsEnabled="False" />
+                        <Button
+                            Margin="12,0,0,0"
+                            Content="Vurgulu Devre Dışı"
+                            IsEnabled="False"
+                            Style="{StaticResource AccentButtonStyle}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

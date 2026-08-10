@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/ShadeUI.Demo/ShadeUI.Demo.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/ShadeUI/ShadeUI.csproj" />
+  </Folder>
+</Solution>

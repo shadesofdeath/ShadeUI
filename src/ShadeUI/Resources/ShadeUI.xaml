@@ -1,0 +1,15 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Typography.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ScrollBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Navigation.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Card.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Window.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TitleBar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
