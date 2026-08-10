@@ -1,6 +1,6 @@
 using System.Windows.Controls;
-using ShadeUI.Controls;
 using ShadeUI.Demo.Pages;
+using ShadeWindow = ShadeUI.Controls.ShadeWindow;
 
 namespace ShadeUI.Demo;
 

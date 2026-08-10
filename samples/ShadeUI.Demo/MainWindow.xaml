@@ -89,8 +89,8 @@
                 Background="{DynamicResource LayerFillColorDefaultBrush}"
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1,1,0,0"
-                CornerRadius="4,0,0,0">
-                <ContentControl x:Name="PageHost" Focusable="False" />
+                CornerRadius="6,0,0,0">
+                <ui:TransitionPresenter x:Name="PageHost" ClipToBounds="True" />
             </Border>
         </Grid>
     </Grid>

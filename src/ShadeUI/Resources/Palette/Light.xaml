@@ -11,11 +11,15 @@
     <Color x:Key="SystemAccentColorDark2">#FF00487F</Color>
     <Color x:Key="SystemAccentColorDark3">#FF003055</Color>
 
-    <!--  Surfaces  -->
-    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="#FFF3F3F3" />
-    <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#FFF9F9F9" />
+    <!--  Surfaces — three distinct layers: window shell / content pane / card  -->
+    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="#FFEDEDED" />
+    <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#FFF7F7F7" />
+    <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#FFFBFBFB" />
     <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#0F000000" />
+    <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#14000000" />
+
+    <!--  Non-client 1 px window border (applied through DWM)  -->
+    <Color x:Key="WindowBorderColor">#FFCDCDCD</Color>
 
     <!--  Raw stroke colors (needed as Color for the gradient tokens below)  -->
     <Color x:Key="ControlStrokeColorDefault">#0F000000</Color>

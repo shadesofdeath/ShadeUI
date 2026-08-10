@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using System.Windows.Media;
 
 namespace ShadeUI.Interop;
 
@@ -11,6 +12,7 @@ internal static class Dwm
     private const int DwmwaUseImmersiveDarkMode = 20;
     private const int DwmwaUseImmersiveDarkModeOld = 19; // Windows 10 builds before 20H1
     private const int DwmwaWindowCornerPreference = 33;
+    private const int DwmwaBorderColor = 34;
 
     private const int DwmwcpRound = 2;
 
@@ -50,6 +52,29 @@ internal static class Dwm
         try
         {
             _ = DwmSetWindowAttribute(hwnd, DwmwaWindowCornerPreference, ref value, sizeof(int));
+        }
+        catch (DllNotFoundException)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Paints the 1 px non-client border around the window. Windows 11 22000+ only;
+    /// older builds silently keep the system border.
+    /// </summary>
+    public static void SetBorderColor(IntPtr hwnd, Color color)
+    {
+        if (hwnd == IntPtr.Zero)
+        {
+            return;
+        }
+
+        // COLORREF is 0x00BBGGRR
+        int value = color.R | (color.G << 8) | (color.B << 16);
+
+        try
+        {
+            _ = DwmSetWindowAttribute(hwnd, DwmwaBorderColor, ref value, sizeof(int));
         }
         catch (DllNotFoundException)
         {

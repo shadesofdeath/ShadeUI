@@ -12,6 +12,7 @@
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Navigation.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Card.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TransitionPresenter.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Window.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TitleBar.xaml" />
     </ResourceDictionary.MergedDictionaries>

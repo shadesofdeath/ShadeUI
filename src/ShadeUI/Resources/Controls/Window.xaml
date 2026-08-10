@@ -26,7 +26,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:ShadeWindow}">
                     <Border
-                        x:Name="Root"
+                        x:Name="PART_Root"
                         Background="{TemplateBinding Background}"
                         SnapsToDevicePixels="True">
                         <AdornerDecorator>
@@ -36,7 +36,7 @@
                     <ControlTemplate.Triggers>
                         <!--  Compensate for the invisible resize frame that sticks out of the screen when maximized  -->
                         <Trigger Property="WindowState" Value="Maximized">
-                            <Setter TargetName="Root" Property="Padding" Value="8" />
+                            <Setter TargetName="PART_Root" Property="Padding" Value="8" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

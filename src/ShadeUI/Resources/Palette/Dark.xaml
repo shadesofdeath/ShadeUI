@@ -11,22 +11,30 @@
     <Color x:Key="SystemAccentColorDark2">#FF00487F</Color>
     <Color x:Key="SystemAccentColorDark3">#FF003055</Color>
 
-    <!--  Surfaces  -->
-    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="#FF202020" />
-    <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#FF272727" />
-    <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#FF2D2D2D" />
-    <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#19000000" />
+    <!--
+        Surfaces — one even grey ramp, +6 per level:
+        shell #121212 → pane #181818 → card #1E1E1E → control ≈ #262626
+    -->
+    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="#FF121212" />
+    <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="#FF181818" />
+    <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#FF151515" />
+    <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#14FFFFFF" />
+
+    <!--  Non-client 1 px window border (applied through DWM)  -->
+    <Color x:Key="WindowBorderColor">#FF3A3A3A</Color>
 
     <!--  Raw stroke colors (needed as Color for the gradient tokens below)  -->
     <Color x:Key="ControlStrokeColorDefault">#12FFFFFF</Color>
     <Color x:Key="ControlStrokeColorSecondary">#18FFFFFF</Color>
 
     <!--  Control fills  -->
-    <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="#0FFFFFFF" />
-    <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="#15FFFFFF" />
-    <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="#08FFFFFF" />
-    <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="#0BFFFFFF" />
-    <SolidColorBrush x:Key="ControlFillColorInputActiveBrush" Color="#FF1E1E1E" />
+    <!--  Translucent white overlays, tuned so a control on a card lands on the ramp above  -->
+    <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="#08FFFFFF" />
+    <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="#10FFFFFF" />
+    <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="#05FFFFFF" />
+    <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="#06FFFFFF" />
+    <SolidColorBrush x:Key="ControlFillColorInputActiveBrush" Color="#FF141414" />
     <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
     <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="#8BFFFFFF" />
