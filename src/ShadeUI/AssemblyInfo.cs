@@ -6,4 +6,5 @@ using System.Windows.Markup;
 [assembly: XmlnsPrefix("http://schemas.shadeui.dev/2026/xaml", "ui")]
 [assembly: XmlnsDefinition("http://schemas.shadeui.dev/2026/xaml", "ShadeUI.Appearance")]
 [assembly: XmlnsDefinition("http://schemas.shadeui.dev/2026/xaml", "ShadeUI.Controls")]
+[assembly: XmlnsDefinition("http://schemas.shadeui.dev/2026/xaml", "ShadeUI.Effects")]
 [assembly: XmlnsDefinition("http://schemas.shadeui.dev/2026/xaml", "ShadeUI.Markup")]
