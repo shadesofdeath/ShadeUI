@@ -26,6 +26,13 @@
     <sys:Double x:Key="CheckGlyphSize">11</sys:Double>
     <CornerRadius x:Key="CircleCornerRadius">8</CornerRadius>
 
+    <!--  ToggleSwitch: knob travel = width - 2*inset - knob  -->
+    <sys:Double x:Key="ToggleSwitchWidth">34</sys:Double>
+    <sys:Double x:Key="ToggleSwitchHeight">18</sys:Double>
+    <sys:Double x:Key="ToggleSwitchKnobSize">12</sys:Double>
+    <CornerRadius x:Key="PillCornerRadius">9</CornerRadius>
+    <CornerRadius x:Key="KnobCornerRadius">6</CornerRadius>
+
     <Thickness x:Key="ControlPadding">8,3,8,3</Thickness>
     <Thickness x:Key="ButtonPadding">10,3,10,3</Thickness>
     <Thickness x:Key="CardPadding">12</Thickness>

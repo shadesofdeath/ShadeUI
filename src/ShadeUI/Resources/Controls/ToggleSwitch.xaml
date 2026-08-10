@@ -1,0 +1,253 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:ShadeUI.Controls"
+    xmlns:effects="clr-namespace:ShadeUI.Effects">
+
+    <Style x:Key="DefaultToggleSwitchStyle" TargetType="{x:Type controls:ToggleSwitch}">
+        <Setter Property="Background" Value="{DynamicResource ControlAltFillColorSecondaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="effects:Reveal.IsEnabled" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ShadeFocusVisualStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ToggleSwitch}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            x:Name="RevealFill"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="-4,-2,-4,-2"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            IsHitTestVisible="False"
+                            Opacity="0">
+                            <Border.Background>
+                                <RadialGradientBrush
+                                    Center="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    GradientOrigin="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    RadiusX="0.6"
+                                    RadiusY="1.4">
+                                    <GradientStop Offset="0.0" Color="{DynamicResource RevealFillColorNear}" />
+                                    <GradientStop Offset="0.6" Color="{DynamicResource RevealFillColorMid}" />
+                                    <GradientStop Offset="1.0" Color="{DynamicResource RevealColorTransparent}" />
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Grid
+                            Grid.Column="0"
+                            Width="{DynamicResource ToggleSwitchWidth}"
+                            Height="{DynamicResource ToggleSwitchHeight}"
+                            VerticalAlignment="Center">
+
+                            <Border
+                                x:Name="Track"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource PillCornerRadius}"
+                                SnapsToDevicePixels="True" />
+
+                            <Border
+                                x:Name="TrackHover"
+                                Background="{DynamicResource ControlAltFillColorTertiaryBrush}"
+                                CornerRadius="{DynamicResource PillCornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
+
+                            <Border
+                                x:Name="AccentLayer"
+                                Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                CornerRadius="{DynamicResource PillCornerRadius}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
+
+                            <Border
+                                x:Name="Knob"
+                                Width="{DynamicResource ToggleSwitchKnobSize}"
+                                Height="{DynamicResource ToggleSwitchKnobSize}"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource TextFillColorSecondaryBrush}"
+                                CornerRadius="{DynamicResource KnobCornerRadius}"
+                                IsHitTestVisible="False"
+                                RenderTransformOrigin="0,0.5">
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="KnobScale" ScaleX="1" ScaleY="1" />
+                                        <TranslateTransform x:Name="KnobSlide" X="0" />
+                                    </TransformGroup>
+                                </Border.RenderTransform>
+                            </Border>
+                        </Grid>
+
+                        <ContentPresenter
+                            x:Name="ContentHost"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding ActualContent}"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TrackHover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.16">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.20">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="TrackHover"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.26" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.30" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <!--  Pressing squishes the knob sideways, like WinUI  -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1.4"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            To="1"
+                                            Duration="0:0:0.30">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Track" Property="BorderBrush" Value="Transparent" />
+                            <Setter TargetName="Knob" Property="Background" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter TargetName="Knob" Property="RenderTransformOrigin" Value="1,0.5" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AccentLayer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.16" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobSlide"
+                                            Storyboard.TargetProperty="X"
+                                            To="16"
+                                            Duration="0:0:0.24">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AccentLayer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.20" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobSlide"
+                                            Storyboard.TargetProperty="X"
+                                            To="0"
+                                            Duration="0:0:0.24">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Track" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+                            <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDisabledBrush}" />
+                            <Setter TargetName="AccentLayer" Property="Background" Value="{DynamicResource AccentFillColorDisabledBrush}" />
+                            <Setter TargetName="Knob" Property="Background" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="{x:Type controls:ToggleSwitch}" />
+
+</ResourceDictionary>

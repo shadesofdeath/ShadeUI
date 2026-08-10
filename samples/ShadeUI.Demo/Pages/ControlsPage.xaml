@@ -14,7 +14,7 @@
                 Margin="0,6,0,0"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="Button, TextBox, CheckBox ve RadioButton hazır. ComboBox, ToggleSwitch ve daha fazlası sonraki adımlarda buraya eklenecek." />
+                Text="Button, TextBox, CheckBox, RadioButton ve ToggleSwitch hazır. ComboBox ve daha fazlası sonraki adımlarda buraya eklenecek." />
 
             <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
@@ -180,6 +180,52 @@
                             GroupName="Demo2"
                             IsChecked="True"
                             IsEnabled="False" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="ToggleSwitch" />
+                        <ui:ToggleSwitch Margin="0,8,0,0" Content="Bildirimler" />
+                        <ui:ToggleSwitch
+                            Margin="0,6,0,0"
+                            Content="Otomatik güncelleme"
+                            IsChecked="True" />
+                        <ui:ToggleSwitch
+                            Margin="0,6,0,0"
+                            Content="Devre dışı"
+                            IsEnabled="False" />
+                        <ui:ToggleSwitch
+                            Margin="0,6,0,0"
+                            Content="Devre dışı, açık"
+                            IsChecked="True"
+                            IsEnabled="False" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Duruma göre etiket" />
+                        <ui:ToggleSwitch
+                            Margin="0,8,0,0"
+                            IsChecked="True"
+                            OffContent="Kapalı"
+                            OnContent="Açık" />
+                        <ui:ToggleSwitch
+                            Margin="0,6,0,0"
+                            OffContent="Wi-Fi kapalı"
+                            OnContent="Wi-Fi açık" />
+                        <TextBlock
+                            Margin="0,8,0,0"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="OnContent / OffContent verilirse etiket duruma göre değişir; verilmezse Content kullanılır."
+                            TextWrapping="Wrap" />
                     </StackPanel>
                 </Grid>
             </Border>
