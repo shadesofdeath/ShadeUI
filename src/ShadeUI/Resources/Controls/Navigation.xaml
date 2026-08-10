@@ -3,9 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="ShadeNavigationItemStyle" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="Height" Value="36" />
-        <Setter Property="Margin" Value="4,2" />
-        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="Height" Value="{DynamicResource NavigationItemHeight}" />
+        <Setter Property="Margin" Value="4,1" />
+        <Setter Property="Padding" Value="9,0" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -16,7 +18,7 @@
                         <Border
                             x:Name="Background"
                             Background="Transparent"
-                            CornerRadius="4">
+                            CornerRadius="{DynamicResource ControlCornerRadius}">
                             <ContentPresenter
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalAlignment="Left"
@@ -26,7 +28,7 @@
                         <Border
                             x:Name="SelectionPill"
                             Width="3"
-                            Height="16"
+                            Height="14"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="{DynamicResource AccentFillColorDefaultBrush}"

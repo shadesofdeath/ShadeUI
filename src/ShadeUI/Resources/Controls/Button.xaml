@@ -7,9 +7,9 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Rectangle
-                        Margin="-3"
-                        RadiusX="7"
-                        RadiusY="7"
+                        Margin="-2"
+                        RadiusX="5"
+                        RadiusY="5"
                         Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
                         StrokeThickness="2" />
                 </ControlTemplate>
@@ -22,9 +22,11 @@
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Padding" Value="12,5" />
-        <Setter Property="MinHeight" Value="32" />
-        <Setter Property="MinWidth" Value="64" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="MinWidth" Value="{DynamicResource ControlMinWidth}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -37,7 +39,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="4"
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter
                             x:Name="ContentHost"
@@ -82,7 +84,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="4"
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter
                             x:Name="ContentHost"

@@ -7,7 +7,7 @@
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome
-                    CaptionHeight="44"
+                    CaptionHeight="36"
                     CornerRadius="0"
                     GlassFrameThickness="-1"
                     ResizeBorderThickness="8"
@@ -17,7 +17,7 @@
         <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
         <Setter Property="WindowStyle" Value="SingleBorderWindow" />
         <Setter Property="AllowsTransparency" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

@@ -17,13 +17,32 @@
     <SolidColorBrush x:Key="CardBackgroundFillColorDefaultBrush" Color="#FF2D2D2D" />
     <SolidColorBrush x:Key="CardStrokeColorDefaultBrush" Color="#19000000" />
 
+    <!--  Raw stroke colors (needed as Color for the gradient tokens below)  -->
+    <Color x:Key="ControlStrokeColorDefault">#12FFFFFF</Color>
+    <Color x:Key="ControlStrokeColorSecondary">#18FFFFFF</Color>
+
     <!--  Control fills  -->
     <SolidColorBrush x:Key="ControlFillColorDefaultBrush" Color="#0FFFFFFF" />
     <SolidColorBrush x:Key="ControlFillColorSecondaryBrush" Color="#15FFFFFF" />
     <SolidColorBrush x:Key="ControlFillColorTertiaryBrush" Color="#08FFFFFF" />
     <SolidColorBrush x:Key="ControlFillColorDisabledBrush" Color="#0BFFFFFF" />
-    <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="#12FFFFFF" />
+    <SolidColorBrush x:Key="ControlFillColorInputActiveBrush" Color="#FF1E1E1E" />
+    <SolidColorBrush x:Key="ControlStrokeColorDefaultBrush" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
     <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="#8BFFFFFF" />
+
+    <!--  Elevation border: same 1px ring as ControlStrokeColorDefault, but a stronger bottom edge  -->
+    <LinearGradientBrush
+        x:Key="ControlElevationBorderBrush"
+        MappingMode="Absolute"
+        StartPoint="0,0"
+        EndPoint="0,3">
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleY="-1" />
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
+        <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush>
 
     <!--  Subtle fills (hover / pressed on transparent surfaces)  -->
     <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="Transparent" />

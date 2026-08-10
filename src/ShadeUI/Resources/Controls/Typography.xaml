@@ -6,46 +6,46 @@
     <FontFamily x:Key="ShadeFontFamilyDisplay">Segoe UI Variable Display, Segoe UI</FontFamily>
     <FontFamily x:Key="ShadeIconFontFamily">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
-    <!--  Windows 11 type ramp  -->
+    <!--  Compact type ramp — Windows 11 rampasının bir tık sıkıştırılmış hâli  -->
     <Style x:Key="CaptionTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="11" />
     </Style>
 
     <Style x:Key="BodyTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style x:Key="BodyStrongTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
     <Style x:Key="SubtitleTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamilyDisplay}" />
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
     <Style x:Key="TitleTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamilyDisplay}" />
-        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
     <Style x:Key="TitleLargeTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamilyDisplay}" />
-        <Setter Property="FontSize" Value="40" />
+        <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 
     <Style x:Key="DisplayTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamilyDisplay}" />
-        <Setter Property="FontSize" Value="68" />
+        <Setter Property="FontSize" Value="40" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
 

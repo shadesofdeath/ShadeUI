@@ -1,0 +1,41 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!--
+        ShadeUI ölçü token'ları — "compact" yoğunluk.
+        Bütün kontroller ölçülerini buradan alır; tek dosyadan yoğunluk değiştirilebilir.
+    -->
+
+    <!--  Şekil  -->
+    <CornerRadius x:Key="ControlCornerRadius">3</CornerRadius>
+    <CornerRadius x:Key="ControlCornerRadiusBottom">0,0,2,2</CornerRadius>
+    <CornerRadius x:Key="CardCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="OverlayCornerRadius">4</CornerRadius>
+
+    <!--  Kontrol ölçüleri  -->
+    <sys:Double x:Key="ControlHeight">24</sys:Double>
+    <sys:Double x:Key="ControlMinWidth">60</sys:Double>
+    <sys:Double x:Key="ControlFontSize">12</sys:Double>
+    <sys:Double x:Key="ControlIconSize">12</sys:Double>
+    <sys:Double x:Key="InlineButtonSize">16</sys:Double>
+    <sys:Double x:Key="InlineButtonGlyphSize">9</sys:Double>
+
+    <Thickness x:Key="ControlPadding">8,3,8,3</Thickness>
+    <Thickness x:Key="ButtonPadding">10,3,10,3</Thickness>
+    <Thickness x:Key="CardPadding">12</Thickness>
+
+    <!--  Pencere çerçevesi  -->
+    <sys:Double x:Key="TitleBarHeight">36</sys:Double>
+    <sys:Double x:Key="TitleBarButtonWidth">40</sys:Double>
+    <sys:Double x:Key="TitleBarGlyphSize">9</sys:Double>
+
+    <!--  Navigasyon  -->
+    <sys:Double x:Key="NavigationItemHeight">30</sys:Double>
+    <sys:Double x:Key="NavigationIconSize">14</sys:Double>
+
+    <!--  Kaydırma çubuğu  -->
+    <sys:Double x:Key="ScrollBarSize">10</sys:Double>
+
+</ResourceDictionary>

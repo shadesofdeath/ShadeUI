@@ -3,15 +3,18 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="36,28,36,36" MaxWidth="1000" HorizontalAlignment="Left">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
 
             <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Ayarlar" />
 
-            <Border Margin="0,24,0,0" Style="{StaticResource ShadeCardStyle}">
+            <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Hakkında" />
                     <TextBlock
-                        Margin="0,12,0,0"
+                        Margin="0,8,0,0"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="ShadeUI 0.1.0 — .NET 10 / WPF" />
                     <TextBlock
@@ -19,7 +22,7 @@
                         Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                         Style="{StaticResource BodyTextBlockStyle}"
                         Text="MIT lisansı ile açık kaynak." />
-                    <TextBlock Margin="0,12,0,0" Style="{StaticResource BodyTextBlockStyle}">
+                    <TextBlock Margin="0,8,0,0" Style="{StaticResource BodyTextBlockStyle}">
                         <Hyperlink
                             Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
                             NavigateUri="https://github.com/shadesofdeath/ShadeUI"
