@@ -22,6 +22,10 @@
     <sys:Double x:Key="InlineButtonSize">16</sys:Double>
     <sys:Double x:Key="InlineButtonGlyphSize">9</sys:Double>
 
+    <sys:Double x:Key="CheckBoxSize">16</sys:Double>
+    <sys:Double x:Key="CheckGlyphSize">11</sys:Double>
+    <CornerRadius x:Key="CircleCornerRadius">8</CornerRadius>
+
     <Thickness x:Key="ControlPadding">8,3,8,3</Thickness>
     <Thickness x:Key="ButtonPadding">10,3,10,3</Thickness>
     <Thickness x:Key="CardPadding">12</Thickness>

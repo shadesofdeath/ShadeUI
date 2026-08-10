@@ -9,6 +9,8 @@
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Window.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TitleBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/RadioButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

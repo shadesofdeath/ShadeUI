@@ -31,6 +31,19 @@
     <SolidColorBrush x:Key="ControlStrokeColorSecondaryBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
     <SolidColorBrush x:Key="ControlStrongFillColorDefaultBrush" Color="#72000000" />
 
+    <!--  Recessed fills and strong strokes (CheckBox / RadioButton boxes)  -->
+    <SolidColorBrush x:Key="ControlAltFillColorSecondaryBrush" Color="#06000000" />
+    <SolidColorBrush x:Key="ControlAltFillColorTertiaryBrush" Color="#0F000000" />
+    <SolidColorBrush x:Key="ControlStrongStrokeColorDefaultBrush" Color="#9C000000" />
+    <SolidColorBrush x:Key="ControlStrongStrokeColorDisabledBrush" Color="#37000000" />
+
+    <!--  Reveal highlight (dark on light surfaces)  -->
+    <Color x:Key="RevealFillColorNear">#14000000</Color>
+    <Color x:Key="RevealFillColorMid">#06000000</Color>
+    <Color x:Key="RevealStrokeColorNear">#59000000</Color>
+    <Color x:Key="RevealStrokeColorMid">#1F000000</Color>
+    <Color x:Key="RevealColorTransparent">#00000000</Color>
+
     <!--  Elevation border: same 1px ring as ControlStrokeColorDefault, but a stronger bottom edge  -->
     <LinearGradientBrush
         x:Key="ControlElevationBorderBrush"

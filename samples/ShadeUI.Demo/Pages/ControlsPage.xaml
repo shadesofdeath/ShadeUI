@@ -14,7 +14,7 @@
                 Margin="0,6,0,0"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="Button ve TextBox hazır. CheckBox, RadioButton, ComboBox, ToggleSwitch ve daha fazlası sonraki adımlarda buraya eklenecek." />
+                Text="Button, TextBox, CheckBox ve RadioButton hazır. ComboBox, ToggleSwitch ve daha fazlası sonraki adımlarda buraya eklenecek." />
 
             <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
@@ -119,6 +119,69 @@
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
                 </StackPanel>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="CheckBox" />
+                        <CheckBox
+                            Margin="0,8,0,0"
+                            Content="İşaretsiz"
+                            IsChecked="False" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Content="İşaretli"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Content="Belirsiz (indeterminate)"
+                            IsChecked="{x:Null}"
+                            IsThreeState="True" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Content="Devre dışı"
+                            IsEnabled="False" />
+                        <CheckBox
+                            Margin="0,4,0,0"
+                            Content="Devre dışı, işaretli"
+                            IsChecked="True"
+                            IsEnabled="False" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="RadioButton" />
+                        <RadioButton
+                            Margin="0,8,0,0"
+                            Content="Sistemi takip et"
+                            GroupName="Demo"
+                            IsChecked="True" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Content="Her zaman açık"
+                            GroupName="Demo" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Content="Her zaman koyu"
+                            GroupName="Demo" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Content="Devre dışı"
+                            GroupName="Demo2"
+                            IsEnabled="False" />
+                        <RadioButton
+                            Margin="0,4,0,0"
+                            Content="Devre dışı, seçili"
+                            GroupName="Demo2"
+                            IsChecked="True"
+                            IsEnabled="False" />
+                    </StackPanel>
+                </Grid>
             </Border>
 
         </StackPanel>

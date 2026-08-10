@@ -7,6 +7,8 @@
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Typography.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Button.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/CheckBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Navigation.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Card.xaml" />

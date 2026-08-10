@@ -14,7 +14,7 @@ A modern, Fluent-inspired UI and theme library for WPF — custom window chrome,
 - 🎨 **Live system theming** — follows the Windows dark/light setting *and* accent color in real time (`Theme="System"`)
 - 🌗 **Dark & Light palettes** — WinUI-style design tokens (`ApplicationBackgroundBrush`, `TextFillColorPrimaryBrush`, `AccentFillColorDefaultBrush`, …)
 - 🧩 **Styled controls** — buttons (default + accent), `TextBox` with placeholder / icon / clear button, navigation list, cards, modern scrollbars
-- ✨ **Reveal highlight** — `effects:Reveal.IsEnabled` makes a control light up from the pointer position, plus animated press/spring-back and an accent glow
+- ✨ **Reveal highlight** — `effects:Reveal.IsEnabled` makes a control light up from the pointer position, plus animated press/spring-back and an accent glow; the reveal colors are palette tokens, so it works on both dark and light surfaces
 - 📐 **Compact by design** — a single set of sizing tokens (`ControlHeight`, `ControlPadding`, `ControlCornerRadius`, …) drives every control; 24 px control height, 12 px body text
 - 📦 **Drop-in setup** — two resource dictionaries in `App.xaml` and you are done
 
@@ -85,7 +85,8 @@ dotnet run --project samples/ShadeUI.Demo
 - [x] Compact sizing token system
 - [x] Reveal / press animations on buttons
 - [x] TextBox (placeholder, icon, clear button, multiline)
-- [ ] CheckBox, RadioButton, ComboBox, ToggleSwitch
+- [x] CheckBox (three-state) + RadioButton
+- [ ] ToggleSwitch, ComboBox
 - [ ] NavigationView control
 - [ ] Snap-layouts flyout on the maximize button
 - [ ] NuGet package
