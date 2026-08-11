@@ -3,7 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:effects="clr-namespace:ShadeUI.Effects">
 
-    <Style x:Key="DefaultCheckBoxStyle" TargetType="{x:Type CheckBox}">
+    <!--  ================  CLASSIC (WinUI kutu + tik)  ================  -->
+
+    <Style x:Key="ClassicCheckBoxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Background" Value="{DynamicResource ControlAltFillColorSecondaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
@@ -345,6 +347,279 @@
                             <Setter TargetName="CheckGlyph" Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
                             <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
                             <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        ================  DEFAULT (CSS "path" port)  ================
+
+        Birebir kaynak CSS:
+            .path                     stroke-width 6, round cap/join,
+                                      stroke-dasharray: 241 9999999; stroke-dashoffset: 0
+            input:checked ~ svg .path stroke-dasharray: 70.5096664428711 9999999;
+                                      stroke-dashoffset: -262.2723388671875
+            transition                stroke-dasharray .5s ease, stroke-dashoffset .5s ease
+
+        Tek bir yol hem yuvarlatılmış kare çerçeveyi hem de onay işaretini içerir; görünür
+        dash penceresi yol boyunca kaydırılınca kare, tike "dönüşür".
+
+        WPF'te StrokeDashArray/StrokeDashOffset değerleri StrokeThickness katı cinsindendir,
+        bu yüzden CSS piksel değerleri 6'ya bölündü:
+            241                -> 40.166667
+            70.5096664428711   -> 11.751611
+            -262.2723388671875 -> -43.712057
+
+        Sapma: sabit beyaz yerine, kapalıyken kutu kenarlığı rengi, işaretliyken accent
+        kullanılıyor (kütüphanenin geri kalanıyla tutarlı olsun diye).
+    -->
+
+    <Style x:Key="DefaultCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="effects:Reveal.IsEnabled" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ShadeFocusVisualStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            x:Name="RevealFill"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="-4,-2,-4,-2"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            IsHitTestVisible="False"
+                            Opacity="0">
+                            <Border.Background>
+                                <RadialGradientBrush
+                                    Center="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    GradientOrigin="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    RadiusX="0.6"
+                                    RadiusY="1.4">
+                                    <GradientStop Offset="0.0" Color="{DynamicResource RevealFillColorNear}" />
+                                    <GradientStop Offset="0.6" Color="{DynamicResource RevealFillColorMid}" />
+                                    <GradientStop Offset="1.0" Color="{DynamicResource RevealColorTransparent}" />
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Viewbox
+                            Grid.Column="0"
+                            Width="{DynamicResource CheckBoxSize}"
+                            Height="{DynamicResource CheckBoxSize}"
+                            VerticalAlignment="Center"
+                            Stretch="Uniform">
+                            <Grid>
+                                <Path
+                                    x:Name="BasePath"
+                                    Data="M 0,16 V 56 A 8,8 90 0 0 8,64 H 56 A 8,8 90 0 0 64,56 V 8 A 8,8 90 0 0 56,0 H 8 A 8,8 90 0 0 0,8 V 16 L 32,48 64,16 V 8 A 8,8 90 0 0 56,0 H 8 A 8,8 90 0 0 0,8 V 56 A 8,8 90 0 0 8,64 H 56 A 8,8 90 0 0 64,56 V 16"
+                                    Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
+                                    StrokeDashOffset="0"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    StrokeStartLineCap="Round"
+                                    StrokeThickness="6"
+                                    effects:StrokeDash.Length="40.166667" />
+
+                                <Path
+                                    x:Name="AccentPath"
+                                    Data="M 0,16 V 56 A 8,8 90 0 0 8,64 H 56 A 8,8 90 0 0 64,56 V 8 A 8,8 90 0 0 56,0 H 8 A 8,8 90 0 0 0,8 V 16 L 32,48 64,16 V 8 A 8,8 90 0 0 56,0 H 8 A 8,8 90 0 0 0,8 V 56 A 8,8 90 0 0 8,64 H 56 A 8,8 90 0 0 64,56 V 16"
+                                    Opacity="0"
+                                    Stroke="{DynamicResource AccentFillColorDefaultBrush}"
+                                    StrokeDashOffset="0"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    StrokeStartLineCap="Round"
+                                    StrokeThickness="6"
+                                    effects:StrokeDash.Length="40.166667" />
+
+                                <Rectangle
+                                    x:Name="IndeterminateMark"
+                                    Width="30"
+                                    Height="6"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Fill="{DynamicResource AccentFillColorDefaultBrush}"
+                                    Opacity="0"
+                                    RadiusX="3"
+                                    RadiusY="3" />
+                            </Grid>
+                        </Viewbox>
+
+                        <ContentPresenter
+                            x:Name="ContentHost"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.20">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.30" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BasePath" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="11.751611" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BasePath" Storyboard.TargetProperty="StrokeDashOffset">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="-43.712057" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentPath" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="11.751611" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentPath" Storyboard.TargetProperty="StrokeDashOffset">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="-43.712057" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AccentPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasePath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BasePath" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="40.166667" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="BasePath" Storyboard.TargetProperty="StrokeDashOffset">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentPath" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="40.166667" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentPath" Storyboard.TargetProperty="StrokeDashOffset">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AccentPath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.25" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BasePath"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IndeterminateMark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.20" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IndeterminateMark"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.16" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BasePath" Property="Stroke" Value="{DynamicResource ControlStrongStrokeColorDisabledBrush}" />
+                            <Setter TargetName="AccentPath" Property="Stroke" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="IndeterminateMark" Property="Fill" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Cursor" Value="Arrow" />
                         </Trigger>
 
                     </ControlTemplate.Triggers>

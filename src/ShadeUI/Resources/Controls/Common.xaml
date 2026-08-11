@@ -26,12 +26,18 @@
     <sys:Double x:Key="CheckGlyphSize">11</sys:Double>
     <CornerRadius x:Key="CircleCornerRadius">8</CornerRadius>
 
-    <!--  ToggleSwitch: knob travel = width - 2*inset - knob  -->
-    <sys:Double x:Key="ToggleSwitchWidth">34</sys:Double>
+    <!--
+        ToggleSwitch — kaynak CSS em tabanlı olduğu için ölçüler ControlFontSize (12) ile çarpıldı:
+        3.5em x 2em iz, 1.4em kol, 0.3em iç boşluk, 1.5em yol, 10/17em ve 8/17em yarıçaplar.
+        Yol (travel) = Width - 2*Inset - KnobSize; storyboard'da literal olarak da geçer.
+    -->
+    <sys:Double x:Key="ToggleSwitchWidth">32</sys:Double>
     <sys:Double x:Key="ToggleSwitchHeight">18</sys:Double>
-    <sys:Double x:Key="ToggleSwitchKnobSize">12</sys:Double>
-    <CornerRadius x:Key="PillCornerRadius">9</CornerRadius>
-    <CornerRadius x:Key="KnobCornerRadius">6</CornerRadius>
+    <sys:Double x:Key="ToggleSwitchKnobSize">13</sys:Double>
+    <sys:Double x:Key="ToggleSwitchTravel">14</sys:Double>
+    <Thickness x:Key="ToggleSwitchKnobInset">2.5,0,0,0</Thickness>
+    <CornerRadius x:Key="ToggleSwitchTrackRadius">5</CornerRadius>
+    <CornerRadius x:Key="ToggleSwitchKnobRadius">4</CornerRadius>
 
     <Thickness x:Key="ControlPadding">8,3,8,3</Thickness>
     <Thickness x:Key="ButtonPadding">10,3,10,3</Thickness>

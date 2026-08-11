@@ -119,7 +119,8 @@ dotnet run --project samples/ShadeUI.Demo
 - [x] CheckBox (three-state) + RadioButton
 - [x] Deep dark surface ramp, window border, open/close + page transitions
 - [x] TitleBar properties + Snap Layouts + system menu
-- [x] ToggleSwitch (`OnContent` / `OffContent`)
+- [x] ToggleSwitch (`OnContent` / `OffContent`) — CSS-derived sliding/rotating knob
+- [x] CheckBox path-morph animation (`StrokeDash` attached property)
 - [ ] ComboBox
 - [ ] NavigationView control
 - [ ] NuGet package

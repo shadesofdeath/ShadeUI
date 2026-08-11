@@ -80,11 +80,11 @@ public class ShadeWindow : Window
 
         _root.BeginAnimation(
             OpacityProperty,
-            new DoubleAnimation(0d, 1d, new Duration(TimeSpan.FromMilliseconds(200))));
+            new DoubleAnimation(0d, 1d, new Duration(TimeSpan.FromMilliseconds(400))));
 
         _rootSlide?.BeginAnimation(
             TranslateTransform.YProperty,
-            new DoubleAnimation(12d, 0d, new Duration(TimeSpan.FromMilliseconds(320)))
+            new DoubleAnimation(12d, 0d, new Duration(TimeSpan.FromMilliseconds(900)))
             {
                 EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut },
             });

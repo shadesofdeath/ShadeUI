@@ -18,7 +18,6 @@
         <ui:TitleBar
             x:Name="AppTitleBar"
             Grid.Row="0"
-            TitleAlignment="Center"
             Title="ShadeUI Demo"
             IconGlyph="&#xE790;" />
 

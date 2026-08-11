@@ -45,6 +45,10 @@
     <SolidColorBrush x:Key="ControlStrongStrokeColorDefaultBrush" Color="#9AFFFFFF" />
     <SolidColorBrush x:Key="ControlStrongStrokeColorDisabledBrush" Color="#28FFFFFF" />
 
+    <!--  ToggleSwitch  -->
+    <SolidColorBrush x:Key="SwitchTrackOffBrush" Color="#FF555555" />
+    <SolidColorBrush x:Key="SwitchKnobBrush" Color="#FFFFFFFF" />
+
     <!--  Reveal highlight (light on dark surfaces)  -->
     <Color x:Key="RevealFillColorNear">#26FFFFFF</Color>
     <Color x:Key="RevealFillColorMid">#0AFFFFFF</Color>

@@ -2,22 +2,45 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:ShadeUI.Controls"
-    xmlns:effects="clr-namespace:ShadeUI.Effects">
+    xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework">
+
+    <!--
+        ================  DEFAULT (CSS "slider" port)  ================
+
+        Birebir kaynak CSS:
+            .slider          background #B6B6B6, border-radius 10px, transition .4s
+            .slider:before   1.4em kare, border-radius 8px, left/bottom .3em,
+                             transform: rotate(270deg), background #fff, transition .4s
+            :checked .slider         background #21CC4C
+            :checked .slider:before  transform: translateX(1.5em)
+
+        İki durumun transform listeleri farklı (rotate -> translateX), bu yüzden tarayıcı
+        matris interpolasyonu yapar: rotate(270deg) matrisi -90 dereceye çözümlenir ve
+        geçiş boyunca -90 -> 0 döner, aynı anda 1.5em kayar. Aşağıda bu iki hareket ayrı
+        transform olarak, CSS'in varsayılan "ease" eğrisiyle (cubic-bezier .25,.1,.25,1)
+        ve 0.4 sn süreyle kurulmuştur.
+
+        İki sapma (bilinçli):
+          * Ölçüler kütüphanenin yoğunluğuna indirildi; CSS em tabanlı olduğu için
+            oranlar korundu (3.5:2 iz, 0.7 kol, 0.15 iç boşluk, 0.75 yol).
+          * Sabit yeşil (#21CC4C) yerine tema accent'i kullanılıyor. Renk geçişi
+            background-color animasyonu yerine accent katmanının opaklığıyla yapılıyor;
+            alfa harmanı doğrusal RGB interpolasyonuna eşit olduğu için görsel sonuç
+            aynı, ama accent DynamicResource olarak canlı takip edilebiliyor.
+    -->
 
     <Style x:Key="DefaultToggleSwitchStyle" TargetType="{x:Type controls:ToggleSwitch}">
-        <Setter Property="Background" Value="{DynamicResource ControlAltFillColorSecondaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="8,0,0,0" />
-        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ToggleSwitchHeight}" />
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="effects:Reveal.IsEnabled" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <!--  WPF only draws this when focus arrived from the keyboard, so clicking shows nothing  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource ShadeFocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -28,28 +51,8 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <Border
-                            x:Name="RevealFill"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="-4,-2,-4,-2"
-                            CornerRadius="{DynamicResource ControlCornerRadius}"
-                            IsHitTestVisible="False"
-                            Opacity="0">
-                            <Border.Background>
-                                <RadialGradientBrush
-                                    Center="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
-                                    GradientOrigin="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
-                                    RadiusX="0.6"
-                                    RadiusY="1.4">
-                                    <GradientStop Offset="0.0" Color="{DynamicResource RevealFillColorNear}" />
-                                    <GradientStop Offset="0.6" Color="{DynamicResource RevealFillColorMid}" />
-                                    <GradientStop Offset="1.0" Color="{DynamicResource RevealColorTransparent}" />
-                                </RadialGradientBrush>
-                            </Border.Background>
-                        </Border>
-
                         <Grid
+                            x:Name="SwitchRoot"
                             Grid.Column="0"
                             Width="{DynamicResource ToggleSwitchWidth}"
                             Height="{DynamicResource ToggleSwitchHeight}"
@@ -57,43 +60,42 @@
 
                             <Border
                                 x:Name="Track"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{DynamicResource PillCornerRadius}"
+                                Background="{DynamicResource SwitchTrackOffBrush}"
+                                CornerRadius="{DynamicResource ToggleSwitchTrackRadius}"
                                 SnapsToDevicePixels="True" />
-
-                            <Border
-                                x:Name="TrackHover"
-                                Background="{DynamicResource ControlAltFillColorTertiaryBrush}"
-                                CornerRadius="{DynamicResource PillCornerRadius}"
-                                IsHitTestVisible="False"
-                                Opacity="0" />
 
                             <Border
                                 x:Name="AccentLayer"
                                 Background="{DynamicResource AccentFillColorDefaultBrush}"
-                                CornerRadius="{DynamicResource PillCornerRadius}"
+                                CornerRadius="{DynamicResource ToggleSwitchTrackRadius}"
                                 IsHitTestVisible="False"
-                                Opacity="0" />
+                                Opacity="0"
+                                SnapsToDevicePixels="True" />
 
                             <Border
                                 x:Name="Knob"
                                 Width="{DynamicResource ToggleSwitchKnobSize}"
                                 Height="{DynamicResource ToggleSwitchKnobSize}"
-                                Margin="3,0,0,0"
+                                Margin="{DynamicResource ToggleSwitchKnobInset}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Background="{DynamicResource TextFillColorSecondaryBrush}"
-                                CornerRadius="{DynamicResource KnobCornerRadius}"
+                                CornerRadius="{DynamicResource ToggleSwitchKnobRadius}"
+                                Background="{DynamicResource SwitchKnobBrush}"
                                 IsHitTestVisible="False"
-                                RenderTransformOrigin="0,0.5">
+                                RenderTransformOrigin="0.5,0.5">
                                 <Border.RenderTransform>
+                                    <!--  rotate first, then translate — matches the browser's matrix recomposition  -->
                                     <TransformGroup>
-                                        <ScaleTransform x:Name="KnobScale" ScaleX="1" ScaleY="1" />
-                                        <TranslateTransform x:Name="KnobSlide" X="0" />
+                                        <RotateTransform x:Name="KnobRotate" Angle="-90" />
+                                        <TranslateTransform x:Name="KnobMove" X="0" />
                                     </TransformGroup>
                                 </Border.RenderTransform>
+                                <!--  on accent the knob switches to the on-accent foreground, like the other controls  -->
+                                <Border
+                                    x:Name="KnobOnLayer"
+                                    Background="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
+                                    CornerRadius="{DynamicResource ToggleSwitchKnobRadius}"
+                                    Opacity="0" />
                             </Border>
                         </Grid>
 
@@ -104,6 +106,230 @@
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Content="{TemplateBinding ActualContent}"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!--  background-color: off -> accent (alfa harmanı = doğrusal renk geçişi)  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentLayer" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobOnLayer" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <!--  translateX(0.75 * width) = ToggleSwitchTravel  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="X">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="14" />
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <!--  rotate(270deg) decomposes to -90deg, so it unwinds to 0  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobRotate" Storyboard.TargetProperty="Angle">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentLayer" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobOnLayer" Storyboard.TargetProperty="Opacity">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="X">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobRotate" Storyboard.TargetProperty="Angle">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.4"
+                                                Value="-90" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="SwitchRoot" Property="Opacity" Value="0.4" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="{x:Type controls:ToggleSwitch}" />
+
+    <!--  ================  DROPLET (alternatif)  ================  -->
+
+    <Style x:Key="DropletSwitchFocusVisualStyle">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="-3"
+                        RadiusX="8"
+                        RadiusY="8"
+                        Stroke="{DynamicResource FocusStrokeColorOuterBrush}"
+                        StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DropletToggleSwitchStyle" TargetType="{x:Type primitives:ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource ControlAltFillColorSecondaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="12,0,0,0" />
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource DropletSwitchFocusVisualStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type primitives:ToggleButton}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid
+                            Grid.Column="0"
+                            Width="46"
+                            Height="22"
+                            VerticalAlignment="Center">
+
+                            <Border
+                                x:Name="Track"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="11"
+                                SnapsToDevicePixels="True" />
+
+                            <Border
+                                x:Name="TrackHover"
+                                Background="{DynamicResource ControlAltFillColorTertiaryBrush}"
+                                CornerRadius="11"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
+
+                            <Border
+                                x:Name="AccentLayer"
+                                Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                CornerRadius="11"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
+
+                            <Border
+                                x:Name="SplashOff"
+                                Width="16"
+                                Height="16"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                BorderBrush="{DynamicResource TextFillColorSecondaryBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="8"
+                                IsHitTestVisible="False"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="SplashOffScale" ScaleX="0.5" ScaleY="0.5" />
+                                </Border.RenderTransform>
+                            </Border>
+
+                            <Border
+                                x:Name="SplashOn"
+                                Width="16"
+                                Height="16"
+                                Margin="0,0,3,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                BorderBrush="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
+                                BorderThickness="1.5"
+                                CornerRadius="8"
+                                IsHitTestVisible="False"
+                                Opacity="0"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="SplashOnScale" ScaleX="0.5" ScaleY="0.5" />
+                                </Border.RenderTransform>
+                            </Border>
+
+                            <Border
+                                x:Name="Knob"
+                                Width="16"
+                                Height="16"
+                                Margin="3,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource TextFillColorSecondaryBrush}"
+                                CornerRadius="8"
+                                IsHitTestVisible="False"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform x:Name="KnobDrop" ScaleX="1" ScaleY="1" />
+                                        <ScaleTransform x:Name="KnobPress" ScaleX="1" ScaleY="1" />
+                                        <TranslateTransform x:Name="KnobMove" X="0" Y="0" />
+                                    </TransformGroup>
+                                </Border.RenderTransform>
+                                <Border
+                                    x:Name="KnobOnLayer"
+                                    Background="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
+                                    CornerRadius="8"
+                                    Opacity="0" />
+                            </Border>
+                        </Grid>
+
+                        <ContentPresenter
+                            x:Name="ContentHost"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             RecognizesAccessKey="True"
                             TextElement.Foreground="{TemplateBinding Foreground}" />
                     </Grid>
@@ -123,15 +349,6 @@
                                                 <CubicEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="RevealFill"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0:0:0.20">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -143,25 +360,28 @@
                                             Storyboard.TargetProperty="Opacity"
                                             To="0"
                                             Duration="0:0:0.26" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="RevealFill"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="0"
-                                            Duration="0:0:0.30" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
 
-                        <!--  Pressing squishes the knob sideways, like WinUI  -->
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="KnobScale"
+                                            Storyboard.TargetName="KnobPress"
                                             Storyboard.TargetProperty="ScaleX"
-                                            To="1.4"
+                                            To="1.15"
+                                            Duration="0:0:0.12">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobPress"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="0.88"
                                             Duration="0:0:0.12">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuarticEase EasingMode="EaseOut" />
@@ -174,12 +394,21 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
-                                            Storyboard.TargetName="KnobScale"
+                                            Storyboard.TargetName="KnobPress"
                                             Storyboard.TargetProperty="ScaleX"
                                             To="1"
-                                            Duration="0:0:0.30">
+                                            Duration="0:0:0.26">
                                             <DoubleAnimation.EasingFunction>
-                                                <BackEase Amplitude="0.5" EasingMode="EaseOut" />
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="KnobPress"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            To="1"
+                                            Duration="0:0:0.26">
+                                            <DoubleAnimation.EasingFunction>
+                                                <BackEase Amplitude="0.4" EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -189,23 +418,120 @@
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Track" Property="BorderBrush" Value="Transparent" />
-                            <Setter TargetName="Knob" Property="Background" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
-                            <Setter TargetName="Knob" Property="RenderTransformOrigin" Value="1,0.5" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="Y">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="-13">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.30" Value="-13" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.42" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseIn" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="X">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.12" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.30" Value="24">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseInOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobDrop" Storyboard.TargetProperty="ScaleY">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.06" Value="1.32">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.14" Value="0.90" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.24" Value="0.86" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.34" Value="1.24" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.44" Value="0.74">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.62" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <ElasticEase Oscillations="2" Springiness="6" EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobDrop" Storyboard.TargetProperty="ScaleX">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.06" Value="0.76">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.14" Value="1.08" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.22" Value="1.34" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.30" Value="1.02" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.34" Value="0.82" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.44" Value="1.28">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.62" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <ElasticEase Oscillations="2" Springiness="6" EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
                                         <DoubleAnimation
+                                            BeginTime="0:0:0.10"
                                             Storyboard.TargetName="AccentLayer"
                                             Storyboard.TargetProperty="Opacity"
                                             To="1"
-                                            Duration="0:0:0.16" />
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="KnobSlide"
-                                            Storyboard.TargetProperty="X"
-                                            To="16"
-                                            Duration="0:0:0.24">
+                                            Duration="0:0:0.22">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut" />
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.14"
+                                            Storyboard.TargetName="KnobOnLayer"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.16" />
+
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOn"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.65"
+                                            To="0"
+                                            Duration="0:0:0.38" />
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOnScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            From="0.6"
+                                            To="2.1"
+                                            Duration="0:0:0.42">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOnScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            From="0.6"
+                                            To="2.1"
+                                            Duration="0:0:0.42">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -214,18 +540,113 @@
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="Y">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="-13">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.30" Value="-13" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.42" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseIn" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobMove" Storyboard.TargetProperty="X">
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.12" Value="24" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.30" Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseInOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobDrop" Storyboard.TargetProperty="ScaleY">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.06" Value="1.32">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.14" Value="0.90" />
+                                            <LinearDoubleKeyFrame KeyTime="0:0:0.24" Value="0.86" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.34" Value="1.24" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.44" Value="0.74">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.62" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <ElasticEase Oscillations="2" Springiness="6" EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="KnobDrop" Storyboard.TargetProperty="ScaleX">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.06" Value="0.76">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.14" Value="1.08" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.22" Value="1.34" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.30" Value="1.02" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.34" Value="0.82" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.44" Value="1.28">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <QuadraticEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.62" Value="1">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <ElasticEase Oscillations="2" Springiness="6" EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
                                         <DoubleAnimation
+                                            BeginTime="0:0:0.10"
                                             Storyboard.TargetName="AccentLayer"
                                             Storyboard.TargetProperty="Opacity"
                                             To="0"
-                                            Duration="0:0:0.20" />
+                                            Duration="0:0:0.22" />
+
                                         <DoubleAnimation
-                                            Storyboard.TargetName="KnobSlide"
-                                            Storyboard.TargetProperty="X"
+                                            BeginTime="0:0:0.14"
+                                            Storyboard.TargetName="KnobOnLayer"
+                                            Storyboard.TargetProperty="Opacity"
                                             To="0"
-                                            Duration="0:0:0.24">
+                                            Duration="0:0:0.16" />
+
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOff"
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.5"
+                                            To="0"
+                                            Duration="0:0:0.38" />
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOffScale"
+                                            Storyboard.TargetProperty="ScaleX"
+                                            From="0.6"
+                                            To="2.1"
+                                            Duration="0:0:0.42">
                                             <DoubleAnimation.EasingFunction>
-                                                <QuarticEase EasingMode="EaseOut" />
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.42"
+                                            Storyboard.TargetName="SplashOffScale"
+                                            Storyboard.TargetProperty="ScaleY"
+                                            From="0.6"
+                                            To="2.1"
+                                            Duration="0:0:0.42">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
@@ -238,8 +659,8 @@
                             <Setter TargetName="Track" Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDisabledBrush}" />
                             <Setter TargetName="AccentLayer" Property="Background" Value="{DynamicResource AccentFillColorDisabledBrush}" />
                             <Setter TargetName="Knob" Property="Background" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="KnobOnLayer" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
-                            <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -247,7 +668,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style BasedOn="{StaticResource DefaultToggleSwitchStyle}" TargetType="{x:Type controls:ToggleSwitch}" />
 
 </ResourceDictionary>
