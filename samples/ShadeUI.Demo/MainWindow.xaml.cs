@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using ShadeUI.Controls;
 using ShadeUI.Demo.Pages;
 using ShadeWindow = ShadeUI.Controls.ShadeWindow;
 
@@ -11,21 +12,21 @@ public partial class MainWindow : ShadeWindow
     public MainWindow()
     {
         InitializeComponent();
-        NavigateTo(0);
+        Nav.SelectItem(Nav.MenuItems[0]);
     }
 
-    private void OnNavSelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void OnNavSelectionChanged(object sender, NavigationViewSelectionChangedEventArgs e)
     {
-        NavigateTo(Nav.SelectedIndex);
-    }
-
-    private void NavigateTo(int index)
-    {
-        if (PageHost is null || index < 0)
+        if (e.SelectedItem is not NavigationViewItem { Tag: string tag } || !int.TryParse(tag, out int index))
         {
             return;
         }
 
+        NavigateTo(index);
+    }
+
+    private void NavigateTo(int index)
+    {
         if (!_pages.TryGetValue(index, out UserControl? page))
         {
             page = index switch
@@ -39,6 +40,6 @@ public partial class MainWindow : ShadeWindow
             _pages[index] = page;
         }
 
-        PageHost.Content = page;
+        Nav.Content = page;
     }
 }

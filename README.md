@@ -100,6 +100,26 @@ ThemeManager.Apply(ApplicationTheme.Dark);    // force dark
 ThemeManager.Apply(ApplicationTheme.System);  // follow Windows again
 ```
 
+## NavigationView
+
+```xml
+<ui:NavigationView PaneTitle="My App" SelectionChanged="OnNavSelectionChanged">
+    <ui:NavigationView.MenuItems>
+        <ui:NavigationViewItem Icon="&#xE80F;" Content="Home" Tag="0" />
+        <ui:NavigationViewItem Icon="&#xE8A9;" Content="Controls" InfoBadge="6" Tag="1" />
+    </ui:NavigationView.MenuItems>
+    <ui:NavigationView.FooterItems>
+        <ui:NavigationViewItem Icon="&#xE713;" Content="Settings" Tag="2" />
+    </ui:NavigationView.FooterItems>
+</ui:NavigationView>
+```
+
+`MenuItems` sit at the top, `FooterItems` are pinned to the bottom. The pane animates
+between `OpenPaneLength` (190) and `CompactPaneLength` (44) via `IsPaneOpen` or the
+built-in toggle button; collapsed, items show only their glyph. Also supports
+`Header`, `IsBackButtonVisible` + `BackRequested`, and `SelectedItem` /
+`SelectionChanged`. Page changes animate through the built-in `TransitionPresenter`.
+
 ## TypingText
 
 A text element that types itself out, optionally cycling through a list of words.
@@ -162,8 +182,8 @@ dotnet run --project samples/ShadeUI.Demo
 - [x] ToggleSwitch (`OnContent` / `OffContent`) — CSS-derived sliding/rotating knob
 - [x] CheckBox path-morph animation (`StrokeDash` attached property)
 - [x] TypingText (typewriter animation with word cycling)
-- [ ] ComboBox
-- [ ] NavigationView control
+- [x] ComboBox (flyout dropdown, editable mode)
+- [x] NavigationView + NavigationViewItem (collapsible rail, footer items, info badges)
 - [ ] NuGet package
 
 ## License
