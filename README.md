@@ -162,11 +162,31 @@ Two props from the web original have no WPF counterpart: `className` (use `Style
 
 ## Demo
 
-The repository ships a live gallery app:
+The repository ships a component gallery: one page per control, each with a live
+preview and the XAML that produced it, copyable with one click. The pane groups
+controls into categories and has a filter box.
 
 ```
 dotnet run --project samples/ShadeUI.Demo
 ```
+
+Documenting a control takes a `ControlExample`:
+
+```xml
+<ui:ControlExample x:Name="Ex1" Header="Intents" Description="...">
+    <Button Content="Default" />
+</ui:ControlExample>
+```
+
+```csharp
+Ex1.Xaml = """
+    <Button Content="Default" />
+    """;
+```
+
+The snippet lives in code-behind because a XAML property element cannot preserve
+line breaks — `xml:space` is not allowed there. C# raw string literals keep the
+formatting and need no escaping; `ControlExample` strips the leading indentation.
 
 ## Roadmap
 

@@ -1,0 +1,64 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.CheckBoxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="CheckBox" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Bağımsız açık/kapalı seçim. Tek bir SVG yolunun dash penceresi kaydırılarak kare çerçeve onay işaretine dönüşür." />
+
+            <ui:ControlExample x:Name="Ex1" Description="İşaretlemek için kutuya ya da etikete tıkla." Header="Temel">
+                <StackPanel>
+                    <CheckBox Content="İşaretsiz" />
+                    <CheckBox
+                        Margin="0,6,0,0"
+                        Content="İşaretli"
+                        IsChecked="True" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="IsThreeState ile belirsiz (null) durum eklenir; kısmi seçimleri göstermek için." Header="Üç durumlu">
+                <CheckBox
+                    Content="Belirsiz"
+                    IsChecked="{x:Null}"
+                    IsThreeState="True" />
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Header="Devre dışı">
+                <StackPanel>
+                    <CheckBox Content="Devre dışı" IsEnabled="False" />
+                    <CheckBox
+                        Margin="0,6,0,0"
+                        Content="Devre dışı, işaretli"
+                        IsChecked="True"
+                        IsEnabled="False" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex4" Description="Önceki WinUI tarzı kutu + tik görünümü ClassicCheckBoxStyle adıyla korunuyor." Header="Klasik biçim">
+                <StackPanel>
+                    <CheckBox
+                        Content="Klasik, işaretli"
+                        IsChecked="True"
+                        Style="{StaticResource ClassicCheckBoxStyle}" />
+                    <CheckBox
+                        Margin="0,6,0,0"
+                        Content="Klasik, belirsiz"
+                        IsChecked="{x:Null}"
+                        IsThreeState="True"
+                        Style="{StaticResource ClassicCheckBoxStyle}" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

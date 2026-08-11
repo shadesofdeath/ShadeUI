@@ -3,11 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.shadeui.dev/2026/xaml"
-    Title="ShadeUI Demo"
-    Width="1040"
-    Height="660"
-    MinWidth="680"
-    MinHeight="440"
+    Title="ShadeUI Gallery"
+    Width="1100"
+    Height="700"
+    MinWidth="720"
+    MinHeight="460"
     WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,34 +18,87 @@
         <ui:TitleBar
             x:Name="AppTitleBar"
             Grid.Row="0"
-            Title="ShadeUI Demo"
+            Title="ShadeUI Gallery"
             IconGlyph="&#xE790;" />
 
         <ui:NavigationView
             x:Name="Nav"
             Grid.Row="1"
+            IsSearchVisible="True"
+            OpenPaneLength="212"
             PaneTitle="ShadeUI"
+            SearchPlaceholder="Kontrol ara"
             SelectionChanged="OnNavSelectionChanged">
             <ui:NavigationView.MenuItems>
                 <ui:NavigationViewItem
                     Content="Giriş"
                     Icon="&#xE80F;"
-                    Tag="0" />
+                    Tag="home" />
+
+                <ui:NavigationViewItemHeader Content="Temel" />
                 <ui:NavigationViewItem
-                    Content="Kontroller"
+                    Content="Button"
                     Icon="&#xE8A9;"
-                    InfoBadge="6"
-                    Tag="1" />
+                    Tag="button" />
+                <ui:NavigationViewItem
+                    Content="TypingText"
+                    Icon="&#xE8D2;"
+                    Tag="typingtext" />
+
+                <ui:NavigationViewItemHeader Content="Girdiler" />
+                <ui:NavigationViewItem
+                    Content="TextBox"
+                    Icon="&#xE8AC;"
+                    Tag="textbox" />
+                <ui:NavigationViewItem
+                    Content="ComboBox"
+                    Icon="&#xE7B3;"
+                    Tag="combobox" />
+
+                <ui:NavigationViewItemHeader Content="Seçim" />
+                <ui:NavigationViewItem
+                    Content="CheckBox"
+                    Icon="&#xE73A;"
+                    Tag="checkbox" />
+                <ui:NavigationViewItem
+                    Content="RadioButton"
+                    Icon="&#xECCA;"
+                    Tag="radiobutton" />
+                <ui:NavigationViewItem
+                    Content="ToggleSwitch"
+                    Icon="&#xF19E;"
+                    Tag="toggleswitch" />
+
+                <ui:NavigationViewItemHeader Content="Durum" />
+                <ui:NavigationViewItem
+                    Content="ProgressBar"
+                    Icon="&#xE9D9;"
+                    Tag="progressbar" />
+                <ui:NavigationViewItem
+                    Content="ProgressRing"
+                    Icon="&#xE9F5;"
+                    Tag="progressring" />
+
+                <ui:NavigationViewItemHeader Content="Yüzeyler" />
+                <ui:NavigationViewItem
+                    Content="ContextMenu"
+                    Icon="&#xE700;"
+                    Tag="menu" />
+                <ui:NavigationViewItem
+                    Content="Pencere ve Navigasyon"
+                    Icon="&#xE737;"
+                    Tag="shell" />
+            </ui:NavigationView.MenuItems>
+
+            <ui:NavigationView.FooterItems>
                 <ui:NavigationViewItem
                     Content="Tema"
                     Icon="&#xE790;"
-                    Tag="2" />
-            </ui:NavigationView.MenuItems>
-            <ui:NavigationView.FooterItems>
+                    Tag="theme" />
                 <ui:NavigationViewItem
                     Content="Ayarlar"
                     Icon="&#xE713;"
-                    Tag="3" />
+                    Tag="settings" />
             </ui:NavigationView.FooterItems>
         </ui:NavigationView>
     </Grid>

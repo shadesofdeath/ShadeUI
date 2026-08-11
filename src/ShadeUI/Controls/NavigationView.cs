@@ -128,6 +128,38 @@ public class NavigationView : ContentControl
     public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
         nameof(Header), typeof(object), typeof(NavigationView), new PropertyMetadata(null));
 
+    public static readonly DependencyProperty IsSearchVisibleProperty = DependencyProperty.Register(
+        nameof(IsSearchVisible), typeof(bool), typeof(NavigationView), new PropertyMetadata(false));
+
+    public static readonly DependencyProperty SearchPlaceholderProperty = DependencyProperty.Register(
+        nameof(SearchPlaceholder), typeof(string), typeof(NavigationView), new PropertyMetadata("Ara"));
+
+    public static readonly DependencyProperty SearchTextProperty = DependencyProperty.Register(
+        nameof(SearchText), typeof(string), typeof(NavigationView),
+        new FrameworkPropertyMetadata(string.Empty,
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSearchTextChanged));
+
+    /// <summary>Whether a filter box is shown at the top of the pane.</summary>
+    public bool IsSearchVisible
+    {
+        get => (bool)GetValue(IsSearchVisibleProperty);
+        set => SetValue(IsSearchVisibleProperty, value);
+    }
+
+    /// <summary>Hint shown in the filter box.</summary>
+    public string SearchPlaceholder
+    {
+        get => (string)GetValue(SearchPlaceholderProperty);
+        set => SetValue(SearchPlaceholderProperty, value);
+    }
+
+    /// <summary>Current filter text. Items whose content does not contain it are hidden.</summary>
+    public string SearchText
+    {
+        get => (string)GetValue(SearchTextProperty);
+        set => SetValue(SearchTextProperty, value);
+    }
+
     /// <summary>Whether the pane shows labels or collapses to an icon rail. Defaults to <see langword="true"/>.</summary>
     public bool IsPaneOpen
     {
@@ -270,6 +302,55 @@ public class NavigationView : ContentControl
     {
         RebuildHosts();
         UpdateItemSelection();
+        ApplyFilter();
+    }
+
+    private static void OnSearchTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((NavigationView)d).ApplyFilter();
+    }
+
+    /// <summary>
+    /// Hides items that do not match <see cref="SearchText"/>, and hides a category header
+    /// once every item under it has been filtered out.
+    /// </summary>
+    private void ApplyFilter()
+    {
+        string filter = SearchText?.Trim() ?? string.Empty;
+        bool filtering = filter.Length > 0;
+
+        NavigationViewItemHeader? pendingHeader = null;
+        bool headerHasMatch = false;
+
+        foreach (object item in MenuItems)
+        {
+            switch (item)
+            {
+                case NavigationViewItemHeader header:
+                    if (pendingHeader is not null)
+                    {
+                        pendingHeader.Visibility = headerHasMatch ? Visibility.Visible : Visibility.Collapsed;
+                    }
+
+                    pendingHeader = header;
+                    headerHasMatch = false;
+                    break;
+
+                case NavigationViewItem navItem:
+                    bool matches = !filtering ||
+                        (navItem.Content?.ToString() ?? string.Empty)
+                            .Contains(filter, StringComparison.CurrentCultureIgnoreCase);
+
+                    navItem.Visibility = matches ? Visibility.Visible : Visibility.Collapsed;
+                    headerHasMatch |= matches;
+                    break;
+            }
+        }
+
+        if (pendingHeader is not null)
+        {
+            pendingHeader.Visibility = headerHasMatch ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 
     private void RebuildHosts()

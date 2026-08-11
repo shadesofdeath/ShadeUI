@@ -1,0 +1,57 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ComboBoxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="ComboBox" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Bir listeden tek seçim. Açılır liste ayrı bir flyout yüzeyinde, gölgeli ve animasyonlu; seçili öğe sol menüdekiyle aynı accent göstergesini taşır." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Chevron açılırken 180 derece döner." Header="Varsayılan">
+                <ComboBox Width="240" SelectedIndex="0">
+                    <ComboBoxItem Content="Sistemi takip et" />
+                    <ComboBoxItem Content="Açık tema" />
+                    <ComboBoxItem Content="Koyu tema" />
+                    <ComboBoxItem Content="Yüksek kontrast" />
+                </ComboBox>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="IsEditable ile kullanıcı listede olmayan bir değer de yazabilir." Header="Düzenlenebilir">
+                <ComboBox
+                    Width="240"
+                    IsEditable="True"
+                    Text="Segoe UI Variable">
+                    <ComboBoxItem Content="Segoe UI Variable" />
+                    <ComboBoxItem Content="Cascadia Code" />
+                    <ComboBoxItem Content="Consolas" />
+                </ComboBox>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Description="Uzun listelerde MaxDropDownHeight aşılınca kaydırma çubuğu çıkar." Header="Devre dışı ve uzun liste">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox
+                        Width="180"
+                        IsEnabled="False"
+                        SelectedIndex="0">
+                        <ComboBoxItem Content="Değiştirilemez" />
+                    </ComboBox>
+                    <ComboBox
+                        Width="180"
+                        Margin="10,0,0,0"
+                        ItemsSource="{Binding LongList, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        SelectedIndex="0" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

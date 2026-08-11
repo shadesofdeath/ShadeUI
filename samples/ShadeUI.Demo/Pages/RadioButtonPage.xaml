@@ -1,0 +1,53 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.RadioButtonPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="RadioButton" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Bir grup içinden tek seçim. Aynı GroupName değerini taşıyan düğmeler birbirini dışlar." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Seçilince accent dolgu belirir, iç nokta BackEase ile yaylanarak büyür." Header="Grup">
+                <StackPanel>
+                    <RadioButton
+                        Content="Sistemi takip et"
+                        GroupName="Tema"
+                        IsChecked="True" />
+                    <RadioButton
+                        Margin="0,6,0,0"
+                        Content="Her zaman açık"
+                        GroupName="Tema" />
+                    <RadioButton
+                        Margin="0,6,0,0"
+                        Content="Her zaman koyu"
+                        GroupName="Tema" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Header="Devre dışı">
+                <StackPanel>
+                    <RadioButton
+                        Content="Devre dışı"
+                        GroupName="Kapalı"
+                        IsEnabled="False" />
+                    <RadioButton
+                        Margin="0,6,0,0"
+                        Content="Devre dışı, seçili"
+                        GroupName="Kapalı"
+                        IsChecked="True"
+                        IsEnabled="False" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

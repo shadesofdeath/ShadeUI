@@ -1,0 +1,78 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ShellPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Pencere ve Navigasyon" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Bu pencerenin kendisi ShadeWindow, üstteki çubuk TitleBar, soldaki menü ise NavigationView. Aşağıdaki anahtarlar canlı olarak onları değiştirir." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Center seçildiğinde başlık, ikon ve caption düğmelerinden bağımsız olarak pencereye göre ortalanır." Header="TitleBar — başlık hizalaması">
+                <StackPanel>
+                    <RadioButton
+                        Checked="OnTitleAlignmentChecked"
+                        Content="Sol"
+                        GroupName="TitleAlign"
+                        IsChecked="True"
+                        Tag="Left" />
+                    <RadioButton
+                        Margin="0,6,0,0"
+                        Checked="OnTitleAlignmentChecked"
+                        Content="Orta"
+                        GroupName="TitleAlign"
+                        Tag="Center" />
+                    <RadioButton
+                        Margin="0,6,0,0"
+                        Checked="OnTitleAlignmentChecked"
+                        Content="Sağ"
+                        GroupName="TitleAlign"
+                        Tag="Right" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="CanMaximize kapatılınca büyült düğmesi pasifleşir, Snap Layouts kapanır ve çift tıkla büyütme engellenir." Header="TitleBar — davranış">
+                <StackPanel>
+                    <ui:ToggleSwitch
+                        Checked="OnShowIconChanged"
+                        Content="ShowIcon"
+                        IsChecked="True"
+                        Unchecked="OnShowIconChanged" />
+                    <ui:ToggleSwitch
+                        Margin="0,6,0,0"
+                        Checked="OnCanMaximizeChanged"
+                        Content="CanMaximize"
+                        IsChecked="True"
+                        Unchecked="OnCanMaximizeChanged" />
+                    <TextBlock
+                        Margin="0,8,0,0"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Büyült düğmesinin üzerinde bekleyince Snap Layouts açılır; çubuğa sağ tıklayınca sistem menüsü gelir."
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Description="Panel 212 px ile 44 px'lik ikon rayı arasında animasyonla geçer." Header="NavigationView — panel">
+                <StackPanel>
+                    <Button Click="OnTogglePaneClick" Content="Paneli aç / daralt" />
+                    <TextBlock
+                        Margin="0,8,0,0"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="Kategori başlıkları daraltılınca ince bir ayırıcıya dönüşür; arama kutusu gizlenir."
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

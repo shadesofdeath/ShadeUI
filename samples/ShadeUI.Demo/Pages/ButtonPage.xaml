@@ -1,0 +1,73 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ButtonPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="Button" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Bir eylemi tetikleyen düğme. Üzerine gelindiğinde imleçten yayılan reveal parlaması, basıldığında hafif küçülme ve geri yaylanma uygular." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Varsayılan ve vurgulu olmak üzere iki biçim." Header="Biçimler">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Varsayılan" />
+                    <Button
+                        Margin="8,0,0,0"
+                        Content="Vurgulu"
+                        Style="{StaticResource AccentButtonStyle}" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="IsEnabled kapatıldığında dolgu ve metin sönükleşir, efektler durur." Header="Devre dışı">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Varsayılan" IsEnabled="False" />
+                    <Button
+                        Margin="8,0,0,0"
+                        Content="Vurgulu"
+                        IsEnabled="False"
+                        Style="{StaticResource AccentButtonStyle}" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Description="İçerik serbest olduğu için ikon ve metni birlikte yerleştirebilirsin." Header="İkonlu">
+                <StackPanel Orientation="Horizontal">
+                    <Button>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="{DynamicResource ShadeIconFontFamily}"
+                                FontSize="12"
+                                Text="&#xE710;" />
+                            <TextBlock
+                                Margin="6,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="Yeni" />
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="8,0,0,0" Style="{StaticResource AccentButtonStyle}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontFamily="{DynamicResource ShadeIconFontFamily}"
+                                FontSize="12"
+                                Text="&#xE74E;" />
+                            <TextBlock
+                                Margin="6,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="Kaydet" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

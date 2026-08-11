@@ -1,0 +1,76 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ProgressBarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="ProgressBar" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Yatay ilerleme göstergesi. ProgressBarBaseStyle doğrudan kullanılmaz; renk ve şerit varyantları ona BasedOn ile bağlanır." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Anlamsal renkler tema paletinden gelir, koyu ve açık temada ayrı ayarlanır." Header="Renk varyantları">
+                <StackPanel Width="420">
+                    <ProgressBar Value="70" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarSuccess}"
+                        Value="100" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarInfo}"
+                        Value="55" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarWarning}"
+                        Value="40" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarDanger}"
+                        Value="22" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="45 derece desen sürekli akar; işlem sürdüğü hissini verir." Header="Şeritli">
+                <StackPanel Width="420">
+                    <ProgressBar Style="{StaticResource ProgressBarPrimaryStripe}" Value="70" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarSuccessStripe}"
+                        Value="55" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarInfoStripe}"
+                        Value="45" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarWarningStripe}"
+                        Value="35" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        Style="{StaticResource ProgressBarDangerStripe}"
+                        Value="25" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Description="Flat köşe yuvarlaması olmayan kalın iz; belirsizde parça iz üzerinde gidip gelir." Header="Düz ve belirsiz">
+                <StackPanel Width="420">
+                    <ProgressBar Style="{StaticResource ProgressBarFlat}" Value="60" />
+                    <ProgressBar Margin="0,8,0,0" IsIndeterminate="True" />
+                    <ProgressBar
+                        Margin="0,6,0,0"
+                        IsIndeterminate="True"
+                        Style="{StaticResource ProgressBarSuccess}" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

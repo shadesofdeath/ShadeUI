@@ -7,7 +7,7 @@ namespace ShadeUI.Demo;
 
 public partial class MainWindow : ShadeWindow
 {
-    private readonly Dictionary<int, UserControl> _pages = new();
+    private readonly Dictionary<string, UserControl> _pages = new();
 
     public MainWindow()
     {
@@ -17,29 +17,38 @@ public partial class MainWindow : ShadeWindow
 
     private void OnNavSelectionChanged(object sender, NavigationViewSelectionChangedEventArgs e)
     {
-        if (e.SelectedItem is not NavigationViewItem { Tag: string tag } || !int.TryParse(tag, out int index))
+        if (e.SelectedItem is NavigationViewItem { Tag: string tag })
         {
-            return;
+            NavigateTo(tag);
         }
-
-        NavigateTo(index);
     }
 
-    private void NavigateTo(int index)
+    private void NavigateTo(string tag)
     {
-        if (!_pages.TryGetValue(index, out UserControl? page))
+        if (!_pages.TryGetValue(tag, out UserControl? page))
         {
-            page = index switch
-            {
-                1 => new ControlsPage(),
-                2 => new ThemePage(),
-                3 => new SettingsPage(),
-                _ => new HomePage(),
-            };
-
-            _pages[index] = page;
+            page = CreatePage(tag);
+            _pages[tag] = page;
         }
 
         Nav.Content = page;
     }
+
+    private static UserControl CreatePage(string tag) => tag switch
+    {
+        "button" => new ButtonPage(),
+        "typingtext" => new TypingTextPage(),
+        "textbox" => new TextBoxPage(),
+        "combobox" => new ComboBoxPage(),
+        "checkbox" => new CheckBoxPage(),
+        "radiobutton" => new RadioButtonPage(),
+        "toggleswitch" => new ToggleSwitchPage(),
+        "progressbar" => new ProgressBarPage(),
+        "progressring" => new ProgressRingPage(),
+        "menu" => new MenuPage(),
+        "shell" => new ShellPage(),
+        "theme" => new ThemePage(),
+        "settings" => new SettingsPage(),
+        _ => new HomePage(),
+    };
 }

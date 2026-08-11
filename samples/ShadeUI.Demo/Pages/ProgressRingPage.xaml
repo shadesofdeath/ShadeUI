@@ -1,0 +1,55 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ProgressRingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="ProgressRing" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Dairesel ilerleme göstergesi. WPF'te karşılığı yok; yay, tam daire yolunun görünür dash uzunluğu kısaltılarak çiziliyor." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Value / Minimum / Maximum RangeBase'den gelir." Header="Belirli">
+                <StackPanel Orientation="Horizontal">
+                    <ui:ProgressRing Value="25" />
+                    <ui:ProgressRing
+                        Margin="12,0,0,0"
+                        Style="{StaticResource ProgressRingSuccess}"
+                        Value="60" />
+                    <ui:ProgressRing
+                        Margin="12,0,0,0"
+                        Style="{StaticResource ProgressRingWarning}"
+                        Value="85" />
+                    <ui:ProgressRing
+                        Margin="12,0,0,0"
+                        Style="{StaticResource ProgressRingDanger}"
+                        Value="100" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="Sabit bir yay sürekli döner. RingSize çapı belirler." Header="Belirsiz">
+                <StackPanel Orientation="Horizontal">
+                    <ui:ProgressRing IsIndeterminate="True" />
+                    <ui:ProgressRing
+                        Margin="14,0,0,0"
+                        IsIndeterminate="True"
+                        RingSize="28"
+                        Style="{StaticResource ProgressRingInfo}" />
+                    <ui:ProgressRing
+                        Margin="14,0,0,0"
+                        IsIndeterminate="True"
+                        RingSize="40"
+                        Style="{StaticResource ProgressRingSuccess}" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

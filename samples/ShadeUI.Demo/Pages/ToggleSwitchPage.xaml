@@ -1,0 +1,59 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.ToggleSwitchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="ToggleSwitch" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Anında etki eden açık/kapalı anahtarı. Kol kayarken aynı anda -90 dereceden 0'a döner; ToggleButton türevi olduğu için IsChecked, Checked ve Command olduğu gibi çalışır." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Content etiketi anahtarın sağında görünür." Header="Temel">
+                <StackPanel>
+                    <ui:ToggleSwitch Content="Bildirimler" />
+                    <ui:ToggleSwitch
+                        Margin="0,6,0,0"
+                        Content="Otomatik güncelleme"
+                        IsChecked="True" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="OnContent / OffContent verilirse etiket duruma göre değişir; verilmezse Content kullanılır." Header="Duruma göre etiket">
+                <StackPanel>
+                    <ui:ToggleSwitch
+                        IsChecked="True"
+                        OffContent="Kapalı"
+                        OnContent="Açık" />
+                    <ui:ToggleSwitch
+                        Margin="0,6,0,0"
+                        OffContent="Wi-Fi kapalı"
+                        OnContent="Wi-Fi açık" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Header="Devre dışı">
+                <StackPanel>
+                    <ui:ToggleSwitch Content="Devre dışı" IsEnabled="False" />
+                    <ui:ToggleSwitch
+                        Margin="0,6,0,0"
+                        Content="Devre dışı, açık"
+                        IsChecked="True"
+                        IsEnabled="False" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex4" Description="Damla animasyonlu alternatif; düz bir ToggleButton'a uygulanır." Header="Droplet biçimi">
+                <ToggleButton Content="Damla anahtarı" Style="{StaticResource DropletToggleSwitchStyle}" />
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

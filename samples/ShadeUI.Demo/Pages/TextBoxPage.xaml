@@ -1,0 +1,70 @@
+<UserControl
+    x:Class="ShadeUI.Demo.Pages.TextBoxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel
+            MaxWidth="820"
+            Margin="24,18,24,24"
+            HorizontalAlignment="Left">
+
+            <TextBlock Style="{StaticResource TitleTextBlockStyle}" Text="TextBox" />
+            <TextBlock
+                Margin="0,4,0,16"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource BodyTextBlockStyle}"
+                Text="Tek veya çok satırlı metin girişi. ui:TextBox placeholder, ikon ve temizle düğmesi ekler; düz WPF TextBox da aynı görünümü otomatik alır." />
+
+            <ui:ControlExample x:Name="Ex1" Description="Kutu boşken gösterilen ipucu metni." Header="Placeholder">
+                <ui:TextBox Width="240" PlaceholderText="Adınızı yazın" />
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex2" Description="Icon bir Segoe Fluent Icons glifi alır; IconPlacement ile tarafı seçilir." Header="İkon">
+                <StackPanel Orientation="Horizontal">
+                    <ui:TextBox
+                        Width="200"
+                        Icon="&#xE721;"
+                        PlaceholderText="Ara" />
+                    <ui:TextBox
+                        Width="220"
+                        Margin="10,0,0,0"
+                        Icon="&#xE715;"
+                        IconPlacement="Right"
+                        Text="ornek@shadeui.dev" />
+                </StackPanel>
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex3" Description="Odaklanıp yazınca sağda temizle düğmesi çıkar. ClearButtonEnabled ile kapatılabilir." Header="Temizle düğmesi">
+                <ui:TextBox Width="240" Text="Odaklanınca × belirir" />
+            </ui:ControlExample>
+
+            <ui:ControlExample x:Name="Ex4" Description="AcceptsReturn ile çok satırlı; salt okunur ve devre dışı durumları." Header="Diğer durumlar">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <ui:TextBox
+                            Width="200"
+                            IsReadOnly="True"
+                            Text="Salt okunur" />
+                        <ui:TextBox
+                            Width="200"
+                            Margin="10,0,0,0"
+                            IsEnabled="False"
+                            Text="Devre dışı" />
+                    </StackPanel>
+                    <ui:TextBox
+                        Width="410"
+                        Height="72"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        AcceptsReturn="True"
+                        ClearButtonEnabled="False"
+                        PlaceholderText="Notlarınızı buraya yazabilirsiniz..."
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </StackPanel>
+            </ui:ControlExample>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
