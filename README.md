@@ -100,6 +100,46 @@ ThemeManager.Apply(ApplicationTheme.Dark);    // force dark
 ThemeManager.Apply(ApplicationTheme.System);  // follow Windows again
 ```
 
+## TypingText
+
+A text element that types itself out, optionally cycling through a list of words.
+
+```xml
+<ui:TypingText Loop="True" TypeSpeed="65" DeleteSpeed="35" PauseDelay="1400"
+               TextStyle="Subtitle" CursorStyle="Line">
+    <ui:TypingText.Words>
+        <sys:String>a theme library</sys:String>
+        <sys:String>a control set</sys:String>
+    </ui:TypingText.Words>
+</ui:TypingText>
+
+<!-- or a single string -->
+<ui:TypingText Text="hello world" Duration="70" Delay="400" ShowCursor="False" />
+```
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `Text` | string | `""` | Single string to animate |
+| `Words` | collection | empty | Strings to type and delete in sequence; takes precedence over `Text` |
+| `Duration` | double | 100 | Milliseconds per character when typing `Text` |
+| `TypeSpeed` | double | 100 | Milliseconds per character when typing a `Words` entry |
+| `DeleteSpeed` | double | 50 | Milliseconds per character while deleting |
+| `Delay` | double | 0 | Milliseconds before the first character |
+| `PauseDelay` | double | 1000 | Milliseconds to hold a finished word |
+| `Loop` | bool | false | Restart after the last entry |
+| `TextStyle` | enum | `Body` | Type-ramp level: `Caption`…`Display` |
+| `StartOnView` | bool | true | Wait until scrolled into view |
+| `ShowCursor` | bool | true | Draw the caret |
+| `BlinkCursor` | bool | true | Blink the caret (VS Code cadence, 530 ms) |
+| `CursorStyle` | enum | `Line` | `Line`, `Block` or `Underscore` |
+| `CursorBrush` | Brush | `null` | Caret colour; falls back to `Foreground` |
+
+Also exposes `DisplayText` (read-only), `IsRunning`, `Start()`, `Stop()` and a `Completed` event.
+
+Two props from the web original have no WPF counterpart: `className` (use `Style`) and
+`as` — WPF cannot swap its element type, so the semantic level is expressed through
+`TextStyle` instead.
+
 ## Demo
 
 The repository ships a live gallery app:
@@ -121,6 +161,7 @@ dotnet run --project samples/ShadeUI.Demo
 - [x] TitleBar properties + Snap Layouts + system menu
 - [x] ToggleSwitch (`OnContent` / `OffContent`) — CSS-derived sliding/rotating knob
 - [x] CheckBox path-morph animation (`StrokeDash` attached property)
+- [x] TypingText (typewriter animation with word cycling)
 - [ ] ComboBox
 - [ ] NavigationView control
 - [ ] NuGet package
