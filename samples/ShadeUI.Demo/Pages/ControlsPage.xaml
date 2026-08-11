@@ -323,6 +323,104 @@
             </Border>
 
             <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="ProgressBar" />
+
+                        <TextBlock
+                            Margin="0,8,0,3"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Varsayılan · Success · Info · Warning · Danger" />
+                        <ProgressBar Value="70" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarSuccess}"
+                            Value="100" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarInfo}"
+                            Value="55" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarWarning}"
+                            Value="40" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarDanger}"
+                            Value="22" />
+
+                        <TextBlock
+                            Margin="0,12,0,3"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Şeritli (hareketli)" />
+                        <ProgressBar Style="{StaticResource ProgressBarPrimaryStripe}" Value="70" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarSuccessStripe}"
+                            Value="55" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarWarningStripe}"
+                            Value="40" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            Style="{StaticResource ProgressBarDangerStripe}"
+                            Value="25" />
+
+                        <TextBlock
+                            Margin="0,12,0,3"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Düz (flat) · belirsiz" />
+                        <ProgressBar Style="{StaticResource ProgressBarFlat}" Value="60" />
+                        <ProgressBar
+                            Margin="0,5,0,0"
+                            IsIndeterminate="True" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" MinWidth="150">
+                        <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="ProgressRing" />
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                            <ui:ProgressRing Value="25" />
+                            <ui:ProgressRing
+                                Margin="10,0,0,0"
+                                Style="{StaticResource ProgressRingSuccess}"
+                                Value="60" />
+                            <ui:ProgressRing
+                                Margin="10,0,0,0"
+                                Style="{StaticResource ProgressRingWarning}"
+                                Value="85" />
+                            <ui:ProgressRing
+                                Margin="10,0,0,0"
+                                Style="{StaticResource ProgressRingDanger}"
+                                Value="100" />
+                        </StackPanel>
+
+                        <TextBlock
+                            Margin="0,12,0,3"
+                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="Belirsiz · büyük" />
+                        <StackPanel Orientation="Horizontal">
+                            <ui:ProgressRing IsIndeterminate="True" />
+                            <ui:ProgressRing
+                                Margin="12,0,0,0"
+                                IsIndeterminate="True"
+                                RingSize="36"
+                                Style="{StaticResource ProgressRingInfo}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
                     <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TypingText" />
 

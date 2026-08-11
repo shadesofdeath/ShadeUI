@@ -55,4 +55,8 @@
     <!--  Kaydırma çubuğu  -->
     <sys:Double x:Key="ScrollBarSize">10</sys:Double>
 
+    <!--  İlerleme  -->
+    <CornerRadius x:Key="ProgressBarCornerRadius">4</CornerRadius>
+    <sys:Double x:Key="ProgressRingSize">20</sys:Double>
+
 </ResourceDictionary>

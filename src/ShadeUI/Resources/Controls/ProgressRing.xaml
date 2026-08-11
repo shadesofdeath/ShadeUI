@@ -1,0 +1,116 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:ShadeUI.Controls"
+    xmlns:effects="clr-namespace:ShadeUI.Effects">
+
+    <!--
+        Halka, CheckBox'takiyle aynı stroke-dash tekniğiyle çiziliyor: tam daire yolunun
+        görünür dash uzunluğu değere göre kısaltılıyor.
+
+        Geometri 70x70 birimlik kutunun tam ortasına yerleştirildi: merkez (35,35),
+        yarıçap 32, kalınlık 6 -> çizim tam 0..70 aralığını kaplar. Daire (32,32)
+        merkezli bırakılsaydı eleman merkezi (35,35) ile çakışmaz, döndürme 3 birimlik
+        bir yarıçapta olur ve belirsiz halka dönerken salınırdı.
+    -->
+
+    <Style x:Key="ProgressRingBaseStyle" TargetType="{x:Type controls:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ProgressBarTrackBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:ProgressRing}">
+                    <Viewbox
+                        Width="{TemplateBinding RingSize}"
+                        Height="{TemplateBinding RingSize}"
+                        Stretch="Uniform">
+                        <Grid
+                            Width="70"
+                            Height="70"
+                            RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <RotateTransform x:Name="RingSpin" Angle="0" />
+                            </Grid.RenderTransform>
+
+                            <Path
+                                Width="70"
+                                Height="70"
+                                Data="M 35,3 A 32,32 0 0 1 35,67 A 32,32 0 0 1 35,3"
+                                Stretch="Uniform"
+                                Stroke="{TemplateBinding Background}"
+                                StrokeThickness="6" />
+
+                            <Path
+                                x:Name="Indicator"
+                                Width="70"
+                                Height="70"
+                                Data="M 35,3 A 32,32 0 0 1 35,67 A 32,32 0 0 1 35,3"
+                                Stretch="Uniform"
+                                Stroke="{TemplateBinding Foreground}"
+                                StrokeDashOffset="0"
+                                StrokeEndLineCap="Round"
+                                StrokeStartLineCap="Round"
+                                StrokeThickness="6"
+                                effects:StrokeDash.Length="{TemplateBinding DashLength}" />
+                        </Grid>
+                    </Viewbox>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RingSpin"
+                                            Storyboard.TargetProperty="Angle"
+                                            From="0"
+                                            To="360"
+                                            Duration="0:0:1.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Indicator" Property="Stroke" Value="{DynamicResource AccentFillColorDisabledBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource ProgressRingBaseStyle}" TargetType="{x:Type controls:ProgressRing}" />
+
+    <Style
+        x:Key="ProgressRingSuccess"
+        BasedOn="{StaticResource ProgressRingBaseStyle}"
+        TargetType="{x:Type controls:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource SystemFillColorSuccessBrush}" />
+    </Style>
+
+    <Style
+        x:Key="ProgressRingInfo"
+        BasedOn="{StaticResource ProgressRingBaseStyle}"
+        TargetType="{x:Type controls:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource SystemFillColorAttentionBrush}" />
+    </Style>
+
+    <Style
+        x:Key="ProgressRingWarning"
+        BasedOn="{StaticResource ProgressRingBaseStyle}"
+        TargetType="{x:Type controls:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCautionBrush}" />
+    </Style>
+
+    <Style
+        x:Key="ProgressRingDanger"
+        BasedOn="{StaticResource ProgressRingBaseStyle}"
+        TargetType="{x:Type controls:ProgressRing}">
+        <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCriticalBrush}" />
+    </Style>
+
+</ResourceDictionary>

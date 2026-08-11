@@ -15,6 +15,8 @@
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ToggleSwitch.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ComboBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ProgressBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ProgressRing.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Menu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ToolTip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TypingText.xaml" />

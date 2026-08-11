@@ -50,6 +50,20 @@
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="#1F000000" />
     <Color x:Key="FlyoutShadowColor">#FF000000</Color>
 
+    <!--  Anlamsal durum renkleri (WinUI adlandırması)  -->
+    <SolidColorBrush x:Key="SystemFillColorSuccessBrush" Color="#FF0F7B0F" />
+    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="#FF005FB8" />
+    <SolidColorBrush x:Key="SystemFillColorCautionBrush" Color="#FF9D5D00" />
+    <SolidColorBrush x:Key="SystemFillColorCriticalBrush" Color="#FFC42B1C" />
+
+    <SolidColorBrush x:Key="SystemFillColorSuccessBackgroundBrush" Color="#FFDFF6DD" />
+    <SolidColorBrush x:Key="SystemFillColorAttentionBackgroundBrush" Color="#FFF6F6F6" />
+    <SolidColorBrush x:Key="SystemFillColorCautionBackgroundBrush" Color="#FFFFF4CE" />
+    <SolidColorBrush x:Key="SystemFillColorCriticalBackgroundBrush" Color="#FFFDE7E9" />
+
+    <!--  ProgressBar / ProgressRing  -->
+    <SolidColorBrush x:Key="ProgressBarTrackBrush" Color="#1F000000" />
+
     <!--  Reveal highlight (dark on light surfaces)  -->
     <Color x:Key="RevealFillColorNear">#14000000</Color>
     <Color x:Key="RevealFillColorMid">#06000000</Color>
