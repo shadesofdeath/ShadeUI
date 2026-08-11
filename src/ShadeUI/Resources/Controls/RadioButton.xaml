@@ -3,7 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:effects="clr-namespace:ShadeUI.Effects">
 
-    <Style x:Key="DefaultRadioButtonStyle" TargetType="{x:Type RadioButton}">
+    <!--  ================  CLASSIC (WinUI halka + nokta)  ================  -->
+
+    <Style x:Key="ClassicRadioButtonStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="Background" Value="{DynamicResource ControlAltFillColorSecondaryBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
@@ -273,6 +275,222 @@
                             <Setter TargetName="Dot" Property="Fill" Value="{DynamicResource TextFillColorDisabledBrush}" />
                             <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
                             <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        ================  DEFAULT (CheckBox ile aynı çizgi dili)  ================
+
+        CheckBox'taki stroke-dash tekniğinin dairesel karşılığı: accent halka, tepeden
+        başlayıp saat yönünde kendini çizer (dash penceresi 0 -> çevre), ortadaki nokta
+        aynı eğriyle büyür. Ölçüler CheckBox ile aynı 64 birimlik kutuda, 6 birim kalınlıkta.
+
+        Çevre = 2 * pi * 32 = 201.0619 birim; WPF dash değerleri StrokeThickness katı
+        olduğu için 6'ya bölünür -> 33.5103. Süre ve eğri CheckBox ile aynı:
+        0.5 sn, KeySpline 0.25,0.1 0.25,1.
+    -->
+
+    <Style x:Key="DefaultRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="effects:Reveal.IsEnabled" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource ShadeFocusVisualStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border
+                            x:Name="RevealFill"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="-4,-2,-4,-2"
+                            CornerRadius="{DynamicResource ControlCornerRadius}"
+                            IsHitTestVisible="False"
+                            Opacity="0">
+                            <Border.Background>
+                                <RadialGradientBrush
+                                    Center="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    GradientOrigin="{Binding Path=(effects:Reveal.Origin), RelativeSource={RelativeSource TemplatedParent}}"
+                                    RadiusX="0.6"
+                                    RadiusY="1.4">
+                                    <GradientStop Offset="0.0" Color="{DynamicResource RevealFillColorNear}" />
+                                    <GradientStop Offset="0.6" Color="{DynamicResource RevealFillColorMid}" />
+                                    <GradientStop Offset="1.0" Color="{DynamicResource RevealColorTransparent}" />
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Viewbox
+                            Grid.Column="0"
+                            Width="{DynamicResource CheckBoxSize}"
+                            Height="{DynamicResource CheckBoxSize}"
+                            VerticalAlignment="Center"
+                            Stretch="Uniform">
+                            <Grid>
+                                <Path
+                                    x:Name="BaseRing"
+                                    Data="M 32,0 A 32,32 0 0 1 32,64 A 32,32 0 0 1 32,0"
+                                    Stroke="{DynamicResource ControlStrongStrokeColorDefaultBrush}"
+                                    StrokeThickness="6" />
+
+                                <Path
+                                    x:Name="AccentRing"
+                                    Data="M 32,0 A 32,32 0 0 1 32,64 A 32,32 0 0 1 32,0"
+                                    Opacity="0"
+                                    Stroke="{DynamicResource AccentFillColorDefaultBrush}"
+                                    StrokeDashOffset="0"
+                                    StrokeEndLineCap="Round"
+                                    StrokeLineJoin="Round"
+                                    StrokeStartLineCap="Round"
+                                    StrokeThickness="6"
+                                    effects:StrokeDash.Length="0" />
+
+                                <Ellipse
+                                    x:Name="Dot"
+                                    Width="24"
+                                    Height="24"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Fill="{DynamicResource AccentFillColorDefaultBrush}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Ellipse.RenderTransform>
+                                        <ScaleTransform x:Name="DotScale" ScaleX="0" ScaleY="0" />
+                                    </Ellipse.RenderTransform>
+                                </Ellipse>
+                            </Grid>
+                        </Viewbox>
+
+                        <ContentPresenter
+                            x:Name="ContentHost"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
+                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.20">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RevealFill"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.30" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!--  halka tepeden başlayıp kendini çizer  -->
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="AccentRing"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="1"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentRing" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="33.5103" />
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <!--  nokta aynı eğriyle büyür  -->
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DotScale" Storyboard.TargetProperty="ScaleX">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DotScale" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AccentRing" Storyboard.TargetProperty="(effects:StrokeDash.Length)">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.38"
+                                            Storyboard.TargetName="AccentRing"
+                                            Storyboard.TargetProperty="Opacity"
+                                            To="0"
+                                            Duration="0:0:0.12" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DotScale" Storyboard.TargetProperty="ScaleX">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DotScale" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.25,0.1 0.25,1"
+                                                KeyTime="0:0:0.5"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BaseRing" Property="Stroke" Value="{DynamicResource ControlStrongStrokeColorDisabledBrush}" />
+                            <Setter TargetName="AccentRing" Property="Stroke" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="Dot" Property="Fill" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="ContentHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="RevealFill" Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Cursor" Value="Arrow" />
                         </Trigger>
 
                     </ControlTemplate.Triggers>
