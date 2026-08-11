@@ -10,6 +10,7 @@
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ToggleSwitch.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/TypingText.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ShadeUI;component/Resources/Controls/Navigation.xaml" />

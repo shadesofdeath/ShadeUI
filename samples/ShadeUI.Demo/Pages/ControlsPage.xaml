@@ -14,7 +14,7 @@
                 Margin="0,6,0,0"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="Button, TextBox, CheckBox, RadioButton ve ToggleSwitch hazır. ComboBox ve daha fazlası sonraki adımlarda buraya eklenecek." />
+                Text="Button, TextBox, CheckBox, RadioButton, ToggleSwitch ve ComboBox hazır. NavigationView sıradaki adımda geliyor." />
 
             <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
@@ -228,6 +228,54 @@
                             TextWrapping="Wrap" />
                     </StackPanel>
                 </Grid>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="ComboBox" />
+
+                    <WrapPanel Margin="0,8,0,0" ItemHeight="54">
+                        <StackPanel Width="230" Margin="0,0,12,0">
+                            <TextBlock
+                                Margin="0,0,0,4"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Varsayılan" />
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem Content="Sistemi takip et" />
+                                <ComboBoxItem Content="Açık tema" />
+                                <ComboBoxItem Content="Koyu tema" />
+                                <ComboBoxItem Content="Yüksek kontrast" />
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Width="230" Margin="0,0,12,0">
+                            <TextBlock
+                                Margin="0,0,0,4"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Düzenlenebilir" />
+                            <ComboBox IsEditable="True" Text="Segoe UI Variable">
+                                <ComboBoxItem Content="Segoe UI Variable" />
+                                <ComboBoxItem Content="Cascadia Code" />
+                                <ComboBoxItem Content="Consolas" />
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Width="230" Margin="0,0,12,0">
+                            <TextBlock
+                                Margin="0,0,0,4"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Devre dışı" />
+                            <ComboBox
+                                IsEnabled="False"
+                                SelectedIndex="0">
+                                <ComboBoxItem Content="Değiştirilemez" />
+                            </ComboBox>
+                        </StackPanel>
+                    </WrapPanel>
+                </StackPanel>
             </Border>
 
         </StackPanel>

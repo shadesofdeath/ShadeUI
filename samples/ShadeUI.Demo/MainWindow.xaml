@@ -26,7 +26,6 @@
                 <ColumnDefinition Width="190" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
             <ListBox
                 x:Name="Nav"
                 Grid.Column="0"

@@ -45,6 +45,11 @@
     <SolidColorBrush x:Key="SwitchTrackOffBrush" Color="#FFB6B6B6" />
     <SolidColorBrush x:Key="SwitchKnobBrush" Color="#FFFFFFFF" />
 
+    <!--  Flyout / popup surfaces (bir basamak yukarıda, gölgeyle yükseltilir)  -->
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="#FFFCFCFC" />
+    <SolidColorBrush x:Key="FlyoutBorderBrush" Color="#1F000000" />
+    <Color x:Key="FlyoutShadowColor">#FF000000</Color>
+
     <!--  Reveal highlight (dark on light surfaces)  -->
     <Color x:Key="RevealFillColorNear">#14000000</Color>
     <Color x:Key="RevealFillColorMid">#06000000</Color>
