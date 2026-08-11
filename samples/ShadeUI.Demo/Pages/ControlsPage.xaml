@@ -278,6 +278,49 @@
                 </StackPanel>
             </Border>
 
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="ContextMenu / ToolTip" />
+
+                    <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
+                        <Button Content="Sağ tıkla" ToolTip="Bu düğmeye sağ tıklayınca temalı bağlam menüsü açılır.">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Kes" InputGestureText="Ctrl+X" />
+                                    <MenuItem Header="Kopyala" InputGestureText="Ctrl+C" />
+                                    <MenuItem Header="Yapıştır" InputGestureText="Ctrl+V" />
+                                    <Separator />
+                                    <MenuItem Header="Sabitlenmiş" IsCheckable="True" IsChecked="True" />
+                                    <MenuItem Header="Devre dışı" IsEnabled="False" />
+                                    <Separator />
+                                    <MenuItem Header="Daha fazla">
+                                        <MenuItem Header="Dışa aktar" />
+                                        <MenuItem Header="İçe aktar" />
+                                        <MenuItem Header="Farklı kaydet">
+                                            <MenuItem Header="PNG" />
+                                            <MenuItem Header="SVG" />
+                                        </MenuItem>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+
+                        <Button
+                            Margin="8,0,0,0"
+                            Content="Üzerine gel"
+                            ToolTip="ToolTip de aynı flyout yüzeyini kullanıyor."
+                            Style="{StaticResource AccentButtonStyle}" />
+                    </StackPanel>
+
+                    <TextBlock
+                        Margin="0,8,0,0"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Text="TextBox'ların kendi Kes/Kopyala/Yapıştır menüsü de artık bu stili kullanıyor."
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

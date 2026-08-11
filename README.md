@@ -184,6 +184,7 @@ dotnet run --project samples/ShadeUI.Demo
 - [x] TypingText (typewriter animation with word cycling)
 - [x] ComboBox (flyout dropdown, editable mode)
 - [x] NavigationView + NavigationViewItem (collapsible rail, footer items, info badges)
+- [x] ContextMenu / MenuItem / Menu / Separator / ToolTip
 - [ ] NuGet package
 
 ## License

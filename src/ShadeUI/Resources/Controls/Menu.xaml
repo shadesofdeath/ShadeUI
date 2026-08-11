@@ -1,0 +1,401 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--  ================  SEPARATOR  ================  -->
+
+    <Style x:Key="ShadeMenuSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="8,4" />
+        <Setter Property="Background" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Background="{TemplateBinding Background}" SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource ShadeMenuSeparatorStyle}" TargetType="{x:Type Separator}" />
+
+    <!--  ================  MENU ITEM  ================  -->
+
+    <!--  Açılır menüdeki sıradan öğe  -->
+    <ControlTemplate x:Key="ShadeSubmenuItemTemplate" TargetType="{x:Type MenuItem}">
+        <Border
+            x:Name="Root"
+            Margin="3,1"
+            Padding="{TemplateBinding Padding}"
+            Background="Transparent"
+            CornerRadius="{DynamicResource ControlCornerRadius}"
+            SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="18" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ContentPresenter
+                    x:Name="IconHost"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="{TemplateBinding Icon}" />
+
+                <TextBlock
+                    x:Name="CheckGlyph"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="{DynamicResource ShadeIconFontFamily}"
+                    FontSize="{DynamicResource CheckGlyphSize}"
+                    Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
+                    Text="&#xE73E;"
+                    Visibility="Collapsed" />
+
+                <ContentPresenter
+                    x:Name="HeaderHost"
+                    Grid.Column="1"
+                    Margin="8,0,0,0"
+                    VerticalAlignment="Center"
+                    ContentSource="Header"
+                    RecognizesAccessKey="True"
+                    TextElement.Foreground="{TemplateBinding Foreground}" />
+
+                <TextBlock
+                    x:Name="GestureText"
+                    Grid.Column="2"
+                    Margin="18,0,0,0"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                    Text="{TemplateBinding InputGestureText}" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="IconHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                <Setter TargetName="GestureText" Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  Alt menüsü olan öğe: sağda chevron + kayan popup  -->
+    <ControlTemplate x:Key="ShadeSubmenuHeaderTemplate" TargetType="{x:Type MenuItem}">
+        <Grid>
+            <Border
+                x:Name="Root"
+                Margin="3,1"
+                Padding="{TemplateBinding Padding}"
+                Background="Transparent"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                SnapsToDevicePixels="True">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="18" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ContentPresenter
+                        x:Name="IconHost"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Content="{TemplateBinding Icon}" />
+
+                    <ContentPresenter
+                        x:Name="HeaderHost"
+                        Grid.Column="1"
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        ContentSource="Header"
+                        RecognizesAccessKey="True"
+                        TextElement.Foreground="{TemplateBinding Foreground}" />
+
+                    <TextBlock
+                        x:Name="Chevron"
+                        Grid.Column="2"
+                        Margin="18,0,0,0"
+                        VerticalAlignment="Center"
+                        FontFamily="{DynamicResource ShadeIconFontFamily}"
+                        FontSize="{DynamicResource InlineButtonGlyphSize}"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Text="&#xE76C;" />
+                </Grid>
+            </Border>
+
+            <Popup
+                x:Name="PART_Popup"
+                AllowsTransparency="True"
+                Focusable="False"
+                HorizontalOffset="-4"
+                IsOpen="{TemplateBinding IsSubmenuOpen}"
+                Placement="Right"
+                PopupAnimation="None">
+                <Border
+                    x:Name="SubmenuRoot"
+                    Margin="10,4,10,12"
+                    Padding="0,2"
+                    Background="{DynamicResource FlyoutBackgroundBrush}"
+                    BorderBrush="{DynamicResource FlyoutBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource OverlayCornerRadius}">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="SubmenuSlide" X="0" />
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="14"
+                            Direction="270"
+                            Opacity="0.4"
+                            ShadowDepth="3"
+                            Color="{DynamicResource FlyoutShadowColor}" />
+                    </Border.Effect>
+                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Icon" Value="{x:Null}">
+                <Setter TargetName="IconHost" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsSubmenuOpen" Value="True">
+                <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="SubmenuRoot"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.14" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="SubmenuSlide"
+                                Storyboard.TargetProperty="X"
+                                From="-6"
+                                To="0"
+                                Duration="0:0:0.22">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuarticEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                <Setter TargetName="Chevron" Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--  Menü çubuğundaki üst seviye öğe  -->
+    <ControlTemplate x:Key="ShadeTopLevelHeaderTemplate" TargetType="{x:Type MenuItem}">
+        <Grid>
+            <Border
+                x:Name="Root"
+                Padding="9,3"
+                Background="Transparent"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                SnapsToDevicePixels="True">
+                <ContentPresenter
+                    x:Name="HeaderHost"
+                    VerticalAlignment="Center"
+                    ContentSource="Header"
+                    RecognizesAccessKey="True"
+                    TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Border>
+
+            <Popup
+                x:Name="PART_Popup"
+                AllowsTransparency="True"
+                Focusable="False"
+                IsOpen="{TemplateBinding IsSubmenuOpen}"
+                Placement="Bottom"
+                PopupAnimation="None"
+                VerticalOffset="2">
+                <Border
+                    x:Name="SubmenuRoot"
+                    Margin="10,4,10,12"
+                    Padding="0,2"
+                    Background="{DynamicResource FlyoutBackgroundBrush}"
+                    BorderBrush="{DynamicResource FlyoutBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource OverlayCornerRadius}">
+                    <Border.RenderTransform>
+                        <TranslateTransform x:Name="SubmenuSlide" Y="0" />
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <DropShadowEffect
+                            BlurRadius="14"
+                            Direction="270"
+                            Opacity="0.4"
+                            ShadowDepth="3"
+                            Color="{DynamicResource FlyoutShadowColor}" />
+                    </Border.Effect>
+                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                </Border>
+            </Popup>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+                <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+            </Trigger>
+            <Trigger Property="IsSubmenuOpen" Value="True">
+                <Setter TargetName="Root" Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetName="SubmenuRoot"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="1"
+                                Duration="0:0:0.14" />
+                            <DoubleAnimation
+                                Storyboard.TargetName="SubmenuSlide"
+                                Storyboard.TargetProperty="Y"
+                                From="-6"
+                                To="0"
+                                Duration="0:0:0.22">
+                                <DoubleAnimation.EasingFunction>
+                                    <QuarticEase EasingMode="EaseOut" />
+                                </DoubleAnimation.EasingFunction>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="DefaultMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Padding" Value="9,0" />
+        <Setter Property="MinHeight" Value="{DynamicResource ControlHeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template" Value="{StaticResource ShadeSubmenuItemTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="Role" Value="TopLevelHeader">
+                <Setter Property="Template" Value="{StaticResource ShadeTopLevelHeaderTemplate}" />
+                <Setter Property="Padding" Value="0" />
+            </Trigger>
+            <Trigger Property="Role" Value="TopLevelItem">
+                <Setter Property="Template" Value="{StaticResource ShadeTopLevelHeaderTemplate}" />
+                <Setter Property="Padding" Value="0" />
+            </Trigger>
+            <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter Property="Template" Value="{StaticResource ShadeSubmenuHeaderTemplate}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
+
+    <!--  ================  CONTEXT MENU  ================  -->
+
+    <Style x:Key="DefaultContextMenuStyle" TargetType="{x:Type ContextMenu}">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="MinWidth" Value="140" />
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border
+                        x:Name="Root"
+                        Margin="10,4,10,12"
+                        Padding="0,2"
+                        Background="{DynamicResource FlyoutBackgroundBrush}"
+                        BorderBrush="{DynamicResource FlyoutBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource OverlayCornerRadius}">
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="MenuSlide" Y="0" />
+                        </Border.RenderTransform>
+                        <Border.Effect>
+                            <DropShadowEffect
+                                BlurRadius="14"
+                                Direction="270"
+                                Opacity="0.4"
+                                ShadowDepth="3"
+                                Color="{DynamicResource FlyoutShadowColor}" />
+                        </Border.Effect>
+                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="ContextMenu.Opened">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="Root"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0"
+                                        To="1"
+                                        Duration="0:0:0.14" />
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="MenuSlide"
+                                        Storyboard.TargetProperty="Y"
+                                        From="-6"
+                                        To="0"
+                                        Duration="0:0:0.22">
+                                        <DoubleAnimation.EasingFunction>
+                                            <QuarticEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultContextMenuStyle}" TargetType="{x:Type ContextMenu}" />
+
+    <!--  ================  MENU BAR  ================  -->
+
+    <Style x:Key="DefaultMenuStyle" TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultMenuStyle}" TargetType="{x:Type Menu}" />
+
+</ResourceDictionary>
