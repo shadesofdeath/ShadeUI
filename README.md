@@ -11,6 +11,7 @@ A modern, Fluent-inspired UI and theme library for WPF — custom window chrome,
 ## Features
 
 - 🪟 **ShadeWindow** — custom window chrome with a Win11-style title bar, dark-mode aware non-client area, a themed 1 px DWM border, rounded corners and open/close transitions
+- 🌫️ **System backdrops** — `Backdrop="Solid | Mica | Tabbed | Acrylic"`; unsupported requests fall back to `Solid` and report it through `ActualBackdrop`
 - 🎛️ **Declarative TitleBar** — `TitleAlignment`, `IconGlyph` / `ShowIcon`, leading & trailing content slots, `CanMaximize`, `CloseButtonAction`, plus the native behaviours custom chrome usually loses: **Snap Layouts** on the maximize button and the **system menu** on right-click
 - 🎨 **Live system theming** — follows the Windows dark/light setting *and* accent color in real time (`Theme="System"`)
 - 🌗 **Dark & Light palettes** — WinUI-style design tokens (`ApplicationBackgroundBrush`, `TextFillColorPrimaryBrush`, `AccentFillColorDefaultBrush`, …) on one even surface ramp: shell → content pane → card → control

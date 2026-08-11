@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using ShadeUI.Appearance;
 using ShadeUI.Controls;
 
 namespace ShadeUI.Demo.Pages;
@@ -9,6 +10,13 @@ public partial class ShellPage : UserControl
     public ShellPage()
     {
         InitializeComponent();
+
+        Ex0.Xaml = """
+            <ui:ShadeWindow Backdrop="Mica" />
+
+            <!-- Solid | Mica | Tabbed | Acrylic -->
+            <!-- ActualBackdrop, isteğin kabul edilip edilmediğini bildirir. -->
+            """;
 
         Ex1.Xaml = """
             <ui:TitleBar Title="Uygulamam"
@@ -43,6 +51,25 @@ public partial class ShellPage : UserControl
     }
 
     private MainWindow? Host => Window.GetWindow(this) as MainWindow;
+
+    private void OnBackdropChecked(object sender, RoutedEventArgs e)
+    {
+        if (Host is not { } host || sender is not RadioButton { Tag: string tag })
+        {
+            return;
+        }
+
+        if (!Enum.TryParse(tag, out WindowBackdropType requested))
+        {
+            return;
+        }
+
+        host.Backdrop = requested;
+
+        BackdropStatus.Text = host.ActualBackdrop == requested
+            ? $"Uygulandı: {host.ActualBackdrop}"
+            : $"'{requested}' bu Windows sürümünde desteklenmiyor, {host.ActualBackdrop} kullanılıyor.";
+    }
 
     private void OnTitleAlignmentChecked(object sender, RoutedEventArgs e)
     {

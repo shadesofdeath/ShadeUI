@@ -13,8 +13,15 @@ internal static class Dwm
     private const int DwmwaUseImmersiveDarkModeOld = 19; // Windows 10 builds before 20H1
     private const int DwmwaWindowCornerPreference = 33;
     private const int DwmwaBorderColor = 34;
+    private const int DwmwaSystemBackdropType = 38;
 
     private const int DwmwcpRound = 2;
+
+    // DWM_SYSTEMBACKDROP_TYPE
+    private const int DwmsbtNone = 1;
+    private const int DwmsbtMainWindow = 2;      // Mica
+    private const int DwmsbtTransientWindow = 3; // Acrylic
+    private const int DwmsbtTabbedWindow = 4;    // Mica Alt
 
     [DllImport("dwmapi.dll", ExactSpelling = true)]
     private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int value, int size);
@@ -55,6 +62,36 @@ internal static class Dwm
         }
         catch (DllNotFoundException)
         {
+        }
+    }
+
+    /// <summary>
+    /// Asks the compositor for a system backdrop material.
+    /// Returns <see langword="false"/> when the OS does not support it (pre-22621),
+    /// so the caller can fall back to painting an opaque background.
+    /// </summary>
+    public static bool SetSystemBackdrop(IntPtr hwnd, Appearance.WindowBackdropType type)
+    {
+        if (hwnd == IntPtr.Zero)
+        {
+            return false;
+        }
+
+        int value = type switch
+        {
+            Appearance.WindowBackdropType.Mica => DwmsbtMainWindow,
+            Appearance.WindowBackdropType.Tabbed => DwmsbtTabbedWindow,
+            Appearance.WindowBackdropType.Acrylic => DwmsbtTransientWindow,
+            _ => DwmsbtNone,
+        };
+
+        try
+        {
+            return DwmSetWindowAttribute(hwnd, DwmwaSystemBackdropType, ref value, sizeof(int)) == 0;
+        }
+        catch (DllNotFoundException)
+        {
+            return false;
         }
     }
 

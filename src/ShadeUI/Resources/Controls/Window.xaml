@@ -14,11 +14,22 @@
                     UseAeroCaptionButtons="False" />
             </Setter.Value>
         </Setter>
-        <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}" />
+        <!--
+            Sistem malzemesi etkinken pencere kendi zeminini boyamaz; aksi hâlde
+            arkasındaki mica/acrylic tamamen kapanır. ActualBackdrop kullanılıyor ki
+            desteklenmeyen bir istek sessizce opak zemine düşsün.
+        -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
-        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+        <!--
+            None olmalı: GlassFrameThickness=-1 ile çerçeve istemci alanına uzatıldığı için
+            DWM kendi caption düğmelerini de çiziyor. Opak zeminde görünmüyorlardı, ama
+            sistem malzemesi için zemin saydamlaşınca bizimkilerin yanında ikinci bir set
+            olarak ortaya çıkıyorlar. Pencere yine WindowChrome ile boyutlandırılabilir.
+        -->
+        <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -34,6 +45,9 @@
                         </AdornerDecorator>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="ActualBackdrop" Value="Solid">
+                            <Setter TargetName="PART_Root" Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}" />
+                        </Trigger>
                         <!--  Compensate for the invisible resize frame that sticks out of the screen when maximized  -->
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter TargetName="PART_Root" Property="Padding" Value="8" />

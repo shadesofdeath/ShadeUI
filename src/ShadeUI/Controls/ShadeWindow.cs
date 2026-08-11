@@ -51,6 +51,38 @@ public class ShadeWindow : Window
         set => SetValue(EnableTransitionsProperty, value);
     }
 
+    public static readonly DependencyProperty BackdropProperty = DependencyProperty.Register(
+        nameof(Backdrop),
+        typeof(WindowBackdropType),
+        typeof(ShadeWindow),
+        new PropertyMetadata(WindowBackdropType.Solid, OnBackdropChanged));
+
+    private static readonly DependencyPropertyKey ActualBackdropPropertyKey = DependencyProperty.RegisterReadOnly(
+        nameof(ActualBackdrop),
+        typeof(WindowBackdropType),
+        typeof(ShadeWindow),
+        new PropertyMetadata(WindowBackdropType.Solid));
+
+    /// <summary>Identifies the read-only <see cref="ActualBackdrop"/> property.</summary>
+    public static readonly DependencyProperty ActualBackdropProperty = ActualBackdropPropertyKey.DependencyProperty;
+
+    /// <summary>
+    /// The system material requested behind the window. Defaults to
+    /// <see cref="WindowBackdropType.Solid"/>.
+    /// </summary>
+    public WindowBackdropType Backdrop
+    {
+        get => (WindowBackdropType)GetValue(BackdropProperty);
+        set => SetValue(BackdropProperty, value);
+    }
+
+    /// <summary>
+    /// The material actually in effect. Equals <see cref="Backdrop"/> when the compositor
+    /// accepted it, otherwise <see cref="WindowBackdropType.Solid"/>. The window style keys
+    /// its background off this, so an unsupported request still renders correctly.
+    /// </summary>
+    public WindowBackdropType ActualBackdrop => (WindowBackdropType)GetValue(ActualBackdropProperty);
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -68,6 +100,15 @@ public class ShadeWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
+
+        // A system backdrop is only visible through the WPF render surface if the
+        // composition target itself is transparent. The template root paints an opaque
+        // background in Solid mode, so this is safe to set unconditionally.
+        if (PresentationSource.FromVisual(this) is HwndSource { CompositionTarget: { } target })
+        {
+            target.BackgroundColor = Colors.Transparent;
+        }
+
         ApplyChromeAttributes();
     }
 
@@ -138,6 +179,27 @@ public class ShadeWindow : Window
         timer.Start();
     }
 
+    private static void OnBackdropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((ShadeWindow)d).ApplyBackdrop();
+    }
+
+    private void ApplyBackdrop()
+    {
+        IntPtr hwnd = new WindowInteropHelper(this).Handle;
+        if (hwnd == IntPtr.Zero)
+        {
+            return;
+        }
+
+        WindowBackdropType requested = Backdrop;
+        bool applied = Dwm.SetSystemBackdrop(hwnd, requested);
+
+        SetValue(
+            ActualBackdropPropertyKey,
+            applied && requested != WindowBackdropType.Solid ? requested : WindowBackdropType.Solid);
+    }
+
     private void OnThemeChanged(object? sender, EventArgs e)
     {
         ApplyChromeAttributes();
@@ -158,5 +220,9 @@ public class ShadeWindow : Window
         {
             Dwm.SetBorderColor(hwnd, borderColor);
         }
+
+        // The dark-mode flag changes how the compositor tints the material, so the
+        // backdrop has to be re-applied after a theme switch.
+        ApplyBackdrop();
     }
 }

@@ -16,6 +16,46 @@
                 Style="{StaticResource BodyTextBlockStyle}"
                 Text="Bu pencerenin kendisi ShadeWindow, üstteki çubuk TitleBar, soldaki menü ise NavigationView. Aşağıdaki anahtarlar canlı olarak onları değiştirir." />
 
+            <ui:ControlExample
+                x:Name="Ex0"
+                Description="Mica ve Tabbed uzun ömürlü pencereler için masaüstü duvar kâğıdından türetilir; Acrylic arkadaki içeriği canlı bulanıklaştırır. Windows 11 22621 öncesinde istek sessizce Solid'e düşer."
+                Header="Pencere arka plan malzemesi">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton
+                            Checked="OnBackdropChecked"
+                            Content="Solid"
+                            GroupName="Backdrop"
+                            IsChecked="True"
+                            Tag="Solid" />
+                        <RadioButton
+                            Margin="14,0,0,0"
+                            Checked="OnBackdropChecked"
+                            Content="Mica"
+                            GroupName="Backdrop"
+                            Tag="Mica" />
+                        <RadioButton
+                            Margin="14,0,0,0"
+                            Checked="OnBackdropChecked"
+                            Content="Tabbed"
+                            GroupName="Backdrop"
+                            Tag="Tabbed" />
+                        <RadioButton
+                            Margin="14,0,0,0"
+                            Checked="OnBackdropChecked"
+                            Content="Acrylic"
+                            GroupName="Backdrop"
+                            Tag="Acrylic" />
+                    </StackPanel>
+                    <TextBlock
+                        x:Name="BackdropStatus"
+                        Margin="0,10,0,0"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </ui:ControlExample>
+
             <ui:ControlExample x:Name="Ex1" Description="Center seçildiğinde başlık, ikon ve caption düğmelerinden bağımsız olarak pencereye göre ortalanır." Header="TitleBar — başlık hizalaması">
                 <StackPanel>
                     <RadioButton
