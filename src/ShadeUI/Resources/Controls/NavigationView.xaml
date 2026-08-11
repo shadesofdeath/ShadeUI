@@ -8,8 +8,12 @@
 
     <Style TargetType="{x:Type controls:NavigationViewItem}">
         <Setter Property="Height" Value="{DynamicResource NavigationItemHeight}" />
+        <!--
+            İkon ekseni: 4 (margin) + 11 (padding) + 7 (glif yarısı) = 22 = daraltılmış
+            ray genişliğinin (44) yarısı. Hamburger düğmesi de aynı eksene oturur.
+        -->
         <Setter Property="Margin" Value="4,1" />
-        <Setter Property="Padding" Value="9,0" />
+        <Setter Property="Padding" Value="11,0" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ShadeFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlFontSize}" />
@@ -187,10 +191,11 @@
                             <Setter TargetName="Badge" Property="Visibility" Value="Collapsed" />
                         </Trigger>
 
-                        <!--  daraltılmış rayda yalnızca ikon kalır  -->
+                        <!--  daraltılmış rayda yalnızca ikon kalır, tüm sütunlara yayılıp ortalanır  -->
                         <DataTrigger Binding="{Binding IsPaneOpen, RelativeSource={RelativeSource AncestorType={x:Type controls:NavigationView}}}" Value="False">
                             <Setter TargetName="Label" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="Badge" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="IconGlyph" Property="Grid.ColumnSpan" Value="3" />
                             <Setter TargetName="IconGlyph" Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="Padding" Value="0" />
                         </DataTrigger>
@@ -209,7 +214,8 @@
     <!--  ================  PANE BUTTONS  ================  -->
 
     <Style x:Key="NavigationPaneButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="32" />
+        <!--  36 + 4 kenar boşluğu = ikon ekseni 22, öğelerdekiyle aynı  -->
+        <Setter Property="Width" Value="36" />
         <Setter Property="Height" Value="{DynamicResource NavigationItemHeight}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
