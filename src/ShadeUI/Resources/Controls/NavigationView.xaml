@@ -314,21 +314,22 @@
                                     TextTrimming="CharacterEllipsis" />
                             </Grid>
 
+                            <!--
+                                Öğeler doğrudan panele konur; ItemsControl kullanılsaydı her öğe
+                                ItemAutomationPeer ile sarılır ve NavigationViewItem'ın kendi
+                                otomasyon desenleri (Invoke / SelectionItem) gölgelenirdi.
+                            -->
                             <ScrollViewer
                                 Grid.Row="1"
                                 HorizontalScrollBarVisibility="Disabled"
                                 VerticalScrollBarVisibility="Auto">
-                                <ItemsControl
-                                    Focusable="False"
-                                    ItemsSource="{TemplateBinding MenuItems}"
-                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                <StackPanel x:Name="PART_MenuHost" KeyboardNavigation.DirectionalNavigation="Contained" />
                             </ScrollViewer>
 
-                            <ItemsControl
+                            <StackPanel
+                                x:Name="PART_FooterHost"
                                 Grid.Row="2"
                                 Margin="0,4,0,6"
-                                Focusable="False"
-                                ItemsSource="{TemplateBinding FooterItems}"
                                 KeyboardNavigation.DirectionalNavigation="Contained" />
                         </Grid>
 

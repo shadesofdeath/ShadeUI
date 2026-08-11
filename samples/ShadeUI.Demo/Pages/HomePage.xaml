@@ -1,9 +1,7 @@
 <UserControl
     x:Class="ShadeUI.Demo.Pages.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
-    xmlns:ui="http://schemas.shadeui.dev/2026/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel
             MaxWidth="820"
@@ -15,183 +13,96 @@
                 Margin="0,6,0,0"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource BodyTextBlockStyle}"
-                Text="Modern, Fluent tasarım dilinden ilham alan WPF tema kütüphanesi. Bu pencere ShadeWindow, üstteki başlık çubuğu TitleBar, soldaki menü ise ShadeUI navigasyon stiliyle çiziliyor." />
+                Text="Fluent tasarım dilinden ilham alan, .NET 10 / WPF için modern bir tema ve kontrol kütüphanesi. Bu pencerenin kendisi ShadeWindow, üstteki başlık çubuğu TitleBar, soldaki menü ise NavigationView." />
 
             <Border Margin="0,16,0,0" Style="{StaticResource ShadeCardStyle}">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="TypingText" />
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Neler hazır" />
 
-                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource SubtitleTextBlockStyle}"
-                            Text="ShadeUI bir " />
-                        <ui:TypingText
-                            DeleteSpeed="35"
-                            Foreground="{DynamicResource AccentTextFillColorPrimaryBrush}"
-                            Loop="True"
-                            PauseDelay="1400"
-                            TextStyle="Subtitle"
-                            TypeSpeed="65">
-                            <ui:TypingText.Words>
-                                <sys:String>tema kütüphanesi</sys:String>
-                                <sys:String>kontrol seti</sys:String>
-                                <sys:String>pencere çerçevesi</sys:String>
-                                <sys:String>tasarım sistemi</sys:String>
-                            </ui:TypingText.Words>
-                        </ui:TypingText>
-                    </StackPanel>
-
-                    <Grid Margin="0,12,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Width="120"
-                            Margin="0,0,10,4"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="CursorStyle=Line" />
-                        <ui:TypingText
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="0,0,0,4"
-                            CursorStyle="Line"
-                            Duration="70"
-                            Loop="True"
-                            Text="dosya adı yazılıyor" />
-
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Width="120"
-                            Margin="0,0,10,4"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="CursorStyle=Block" />
-                        <ui:TypingText
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="0,0,0,4"
-                            CursorStyle="Block"
-                            Duration="70"
-                            Loop="True"
-                            Text="terminal modu" />
-
-                        <TextBlock
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Width="120"
-                            Margin="0,0,10,4"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="CursorStyle=Underscore" />
-                        <ui:TypingText
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Margin="0,0,0,4"
-                            CursorStyle="Underscore"
-                            Duration="70"
-                            Loop="True"
-                            Text="eski okul" />
-
-                        <TextBlock
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            Width="120"
-                            Margin="0,0,10,0"
-                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}"
-                            Text="ShowCursor=False" />
-                        <ui:TypingText
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            Delay="400"
-                            Duration="70"
-                            ShowCursor="False"
-                            Text="imleçsiz, tek sefer yazılır" />
-                    </Grid>
-                </StackPanel>
-            </Border>
-
-            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Butonlar" />
-                    <StackPanel Margin="0,8,0,0" Orientation="Horizontal">
-                        <Button Content="Varsayılan Buton" />
-                        <Button
-                            Margin="8,0,0,0"
-                            Content="Vurgulu Buton"
-                            Style="{StaticResource AccentButtonStyle}" />
-                        <Button
-                            Margin="8,0,0,0"
-                            Content="Devre Dışı"
-                            IsEnabled="False" />
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
-            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Tipografi" />
-                    <TextBlock
-                        Margin="0,8,0,0"
-                        Style="{StaticResource TitleTextBlockStyle}"
-                        Text="Title — 20" />
-                    <TextBlock
-                        Margin="0,6,0,0"
-                        Style="{StaticResource SubtitleTextBlockStyle}"
-                        Text="Subtitle — 16" />
-                    <TextBlock
-                        Margin="0,6,0,0"
-                        Style="{StaticResource BodyStrongTextBlockStyle}"
-                        Text="Body Strong — 12" />
-                    <TextBlock
-                        Margin="0,3,0,0"
-                        Style="{StaticResource BodyTextBlockStyle}"
-                        Text="Body — 12" />
-                    <TextBlock
-                        Margin="0,3,0,0"
-                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                        Style="{StaticResource CaptionTextBlockStyle}"
-                        Text="Caption — 11" />
-                </StackPanel>
-            </Border>
-
-            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
-                <StackPanel>
-                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Sistem teması" />
                     <Grid Margin="0,8,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Border
-                            Grid.Column="0"
-                            Width="20"
-                            Height="20"
-                            VerticalAlignment="Center"
-                            Background="{DynamicResource AccentFillColorDefaultBrush}"
-                            CornerRadius="{DynamicResource ControlCornerRadius}" />
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource BodyTextBlockStyle}"
-                            Text="Bu uygulama Windows'un koyu/açık temasını ve vurgu rengini canlı takip ediyor. Windows ayarlarından temayı değiştirip dene." />
+
+                        <StackPanel Grid.Column="0" Margin="0,0,16,0">
+                            <TextBlock
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="Pencere ve kabuk" />
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="ShadeWindow · TitleBar (Snap Layouts, sistem menüsü) · NavigationView · TransitionPresenter"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Margin="0,12,0,0"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="Kontroller" />
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Button · TextBox · CheckBox · RadioButton · ToggleSwitch · ComboBox · TypingText · ContextMenu · ToolTip"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="Tema" />
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Windows koyu/açık temasını ve vurgu rengini canlı takip eder; WinUI adlandırmasıyla token tabanlı palet"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Margin="0,12,0,0"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource BodyTextBlockStyle}"
+                                Text="Yoğunluk" />
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="24 px kontrol yüksekliği, 12 px gövde yazısı; tüm ölçüler tek dosyadaki token'lardan gelir"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
                     </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Margin="0,8,0,0" Style="{StaticResource ShadeCardStyle}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="Hızlı başlangıç" />
+                    <TextBlock
+                        Margin="0,6,0,0"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource BodyTextBlockStyle}"
+                        Text="App.xaml içine iki sözlüğü eklemen yeterli:" />
+                    <Border
+                        Margin="0,8,0,0"
+                        Padding="10,8"
+                        Background="{DynamicResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource ControlCornerRadius}">
+                        <TextBlock
+                            FontFamily="Cascadia Mono, Consolas, Courier New"
+                            FontSize="11"
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}">
+                            <Run Text="&lt;ResourceDictionary.MergedDictionaries&gt;" /><LineBreak />
+                            <Run Text="    &lt;ui:ThemesDictionary Theme=&quot;System&quot; /&gt;" /><LineBreak />
+                            <Run Text="    &lt;ui:ControlsDictionary /&gt;" /><LineBreak />
+                            <Run Text="&lt;/ResourceDictionary.MergedDictionaries&gt;" />
+                        </TextBlock>
+                    </Border>
                 </StackPanel>
             </Border>
 

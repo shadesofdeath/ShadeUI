@@ -39,8 +39,12 @@ public class NavigationViewSelectionChangedEventArgs : EventArgs
 public class NavigationView : ContentControl
 {
     private const string PanePartName = "PART_Pane";
+    private const string MenuHostPartName = "PART_MenuHost";
+    private const string FooterHostPartName = "PART_FooterHost";
 
     private FrameworkElement? _pane;
+    private Panel? _menuHost;
+    private Panel? _footerHost;
 
     static NavigationView()
     {
@@ -202,11 +206,15 @@ public class NavigationView : ContentControl
         base.OnApplyTemplate();
 
         _pane = GetTemplateChild(PanePartName) as FrameworkElement;
+        _menuHost = GetTemplateChild(MenuHostPartName) as Panel;
+        _footerHost = GetTemplateChild(FooterHostPartName) as Panel;
 
         if (_pane is not null)
         {
             _pane.Width = IsPaneOpen ? OpenPaneLength : CompactPaneLength;
         }
+
+        RebuildHosts();
 
         if (GetTemplateChild("PART_ToggleButton") is ButtonBase toggle)
         {
@@ -258,7 +266,50 @@ public class NavigationView : ContentControl
             new NavigationViewSelectionChangedEventArgs(e.NewValue, view.FooterItems.Contains(e.NewValue)));
     }
 
-    private void OnItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e) => UpdateItemSelection();
+    private void OnItemsCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        RebuildHosts();
+        UpdateItemSelection();
+    }
+
+    private void RebuildHosts()
+    {
+        FillHost(_menuHost, MenuItems);
+        FillHost(_footerHost, FooterItems);
+    }
+
+    private static void FillHost(Panel? panel, IEnumerable? items)
+    {
+        if (panel is null)
+        {
+            return;
+        }
+
+        panel.Children.Clear();
+
+        if (items is null)
+        {
+            return;
+        }
+
+        foreach (object? item in items)
+        {
+            UIElement child = item switch
+            {
+                UIElement element => element,
+                _ => new ContentPresenter { Content = item },
+            };
+
+            // A re-templated pane would otherwise try to add an element that still
+            // has a parent from the previous template.
+            if (child is FrameworkElement { Parent: Panel previous } && !ReferenceEquals(previous, panel))
+            {
+                previous.Children.Remove(child);
+            }
+
+            panel.Children.Add(child);
+        }
+    }
 
     private void UpdateItemSelection()
     {
